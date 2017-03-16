@@ -1,0 +1,10 @@
+<script>
+	window.addEventListener('message', function(e) {
+		if(e.source != window.parent) {
+			return;
+		}
+		let data = e.data;
+		console.log('b.html 接收到的消息:', data);
+		parent.postMessage('我已经接收到消息了!', e.origin);
+	});
+</script>

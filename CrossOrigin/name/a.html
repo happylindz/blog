@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>a.html</title>
+</head>
+<body>
+	<script>
+		let data = '';
+		const ifr = document.createElement('iframe');
+		ifr.src = "http://localhost:8081/b.html";
+		ifr.style.display = 'none';
+		document.body.appendChild(ifr);
+		ifr.onload = function() {
+			ifr.onload = function() {
+				data = ifr.contentWindow.name;
+				console.log('收到数据:', data);
+			}
+			ifr.src = "http://localhost:8080/c.html";
+		}
+	</script>
+</body>
+</html>

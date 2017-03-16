@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CORS</title>
+</head>
+<body>
+	<script>
+		const xhr = new XMLHttpRequest();
+		xhr.open('GET', 'http://127.0.0.1:3000', true);
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState === 4 && xhr.status === 200) {
+				alert(xhr.responseText);
+			}
+		}
+		xhr.send(null);
+	</script>
+</body>
+</html>
