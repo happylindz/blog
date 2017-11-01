@@ -13,7 +13,11 @@ git clone https://github.com/happylindz/blog.git
 cd code/xxxx/
 ```
 
+#### | React 相关
+
+* [揭秘 React 状态管理](https://github.com/happylindz/react-state-management-tutorial)
 
 #### | ES6 
 
 * [你可能不知道的 Promise 对象](https://github.com/happylindz/blog/issues/1)
+
