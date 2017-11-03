@@ -6,7 +6,7 @@ export default (state, action) => {
         case actionTypes.FETCH_START:
             return { ...state, 'status': viewStatus.LOADING_STATE }
         case actionTypes.FETCH_SUCCESS:
-            return { ...state, 'status': viewStatus.SUCCESS_STATE, newsTitleList: action.news }
+            return { ...state, 'status': viewStatus.SUCCESS_STATE, newsTitleList: action.news.data.map(news => news.title) }
         case actionTypes.FETCH_FAILURE:
             return { ...state, 'status': viewStatus.FAILURE_STATE }
         case actionTypes.DELETE_NEWS_TITLE:

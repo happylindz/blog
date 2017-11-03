@@ -252,9 +252,264 @@ view -> 函数 action -> redux-thunk 拦截 -> 执行函数并丢弃函数 actio
 
 不难理解我们将原本放在公共目录下的异步操作封装在了一个 action，通过中间件的机制让 action 内部能够拿到 dispatch 值，从而在 action 中能够产生更多的同步 action 对象。
 
+redux-thunk 这种方案对于小型的应用来说足够日常使用，然而对于大型应用来说，你可能会发现一些不方便的地方，对于组合多 action，取消 action，竞态判断的处理就显然有点儿力不从心，这些东西我们也会在后面进行谈到。
+
 redux-thunk 思想很棒，但是其实代码是有一定的相似，比如其实整个代码都是针对请求、成功、失败三部分来处理的，这让我们自然联想到 Promise，同样也是分为 pending、fulfilled、rejected 三种状态。
 
 ## Redux-promise：不推荐
+
+Promise 代表一种承诺，本用来解决异步回调地狱问题，首先我们先来看看 redux-promise 中间件的源码：
+
+```javascript
+import { isFSA } from 'flux-standard-action';
+
+function isPromise(val) {
+  return val && typeof val.then === 'function';
+}
+
+export default function promiseMiddleware({ dispatch }) {
+  return next => action => {
+    if (!isFSA(action)) {
+      return isPromise(action)
+        ? action.then(dispatch)
+        : next(action);
+    }
+
+    return isPromise(action.payload)
+      ? action.payload.then(
+          result => dispatch({ ...action, payload: result }),
+          error => {
+            dispatch({ ...action, payload: error, error: true });
+            return Promise.reject(error);
+          }
+        )
+      : next(action);
+  };
+}
+```
+
+和 redux-thunk 一样，我们抛开复杂的链式箭头函数调用，该中间件做的一件事就是判断 action 或 action.payload 是不是一个 Promise 对象，如果是的话，同样地拦截等待 Promise 对象 resolve 返回数据之后再调用 dispatch，同样的，这个 Promise action 也不会被传递给 reducer 进行处理，如果不是 Promise 对象就不处理。
+
+所以一个异步 action 流程就变成了这样：
+
+```
+view -> Promise action -> redux-promise 拦截 -> 等待 promise resolve -> 将 promise resolve 返回的新的 action(普通) 对象 dispatch -> reducer -> newState -> container component
+```
+
+通过 redux-promise 中间件我们可以在编写 promise action，我们对之前的例子进行修改：
+
+```
+cd asynchronous_with_redux_promise/
+yarn 
+yarn start
+```
+
+我们修改一下 actionCreator：
+
+```javascript
+// actionCreator/index.js
+export default {
+    fetchNewsTitle: () => {
+        return axios.get('/api/v1/topics').then(response => ({
+            type: actionTypes.FETCH_SUCCESS,
+            news: response.data,
+        })).catch(err => ({
+            type: actionTypes.FETCH_FAILURE,
+        }))
+    },
+}
+```
+
+修改 store 中间件 redux-promise
+
+```javascript
+// store/index.js
+
+import { createStore, applyMiddleware } from 'redux'
+import reducer from '../reducers'
+import reduxPromise from 'redux-promise'
+
+export default createStore(reducer, initValue, applyMiddleware(reduxPromise))
+```
+
+效果:没有 Loading 这个中间状态
+
+![](../images/asynchronousAction/2.gif)
+
+但是如果使用 redux-promise 的话相当于是延后执行了 action，等获取到结果之后再重新 dispatch action。这么写其实有个问题，就是无法发起 FETCH_START action，因为actionCreator 中没有 dispatch 这个字段，redux-promise 虽然赋予了 action 延后执行的能力，但是没有能力发起多 action 请求。
+
+严格上来说，我们完全可以写一个中间件，通过判断 action 对象上的某个字段或者什么其他字段，代码如下:
+
+```javascript
+const thunk = ({ dispatch, getState }) => next => action => {
+	if(typeof action.async === 'function) {
+	    return action.async(dispatch, getState);
+	}
+	return next(action);
+}
+```
+
+如果能够这样理解 action 对象，那么我们也没有要求 Promise 中间件处理的异步 action 对象是 Promise 对象，只需要 action 对象谋改革字段是 Promise 字段就行，而 action 对象可以拥有其他字段来包含更多信息。所以我们可以自己编写一个中间件：
+
+```javascript
+// myPromiseMiddleware
+const isPromise = (obj) => {
+    return obj && typeof obj.then === 'function';
+}
+
+export default ({ dispatch }) => (next) => (action) => {
+    const { types, async, ...rest } = action
+    if(!isPromise(async) || !(action.types && action.types.length === 3)) {
+        return next(action)
+    }
+    const [PENDING, SUCCESS, FAILURE] = types
+    dispatch({
+        ...rest,
+        type: PENDING,
+    })
+    return action.async.then(
+        (result) => dispatch({ ...rest, ...result, type: SUCCESS }),
+        (error) => dispatch({ ...rest, ...error, type: FAILURE })
+    )
+}
+```
+
+不难理解，中间件接受同样接收一个 action JS 对象，这个对象需要满足 async 字段是 Promise 对象并且 types 字段长度为 3，否则这不是我们需要的处理的 action 对象，我们传入的 types 字段是个数组，分别为 FETCH_START，FETCH_SUCCESS，FETCH_FAILURE，相当于是我们做个一层约定，让中间件内部去帮我们消化这样的异步 action，当 async promise 对象返回之后调用 FETCH_SUCCESS，FETCH_FAILURE action。
+
+我们改写 actionCreator
+
+```javascript
+// actionCreator/index.js
+export default {
+    myFetchNewsTitle: () => {
+        return {
+            async: axios.get('/api/v1/topics').then(response => ({
+                news: response.data,
+            })),
+            types: [ actionTypes.FETCH_START, actionTypes.FETCH_SUCCESS, actionTypes.FETCH_FAILURE ]
+        }
+    },
+}
+```
+
+这样写相当于是我们约定好了格式，然后让相应地中间件去处理就可以了。但是扩展性较差，适合小型团队共同开发约定好具体的异步格式。
+
+## Redux-saga：功能强大
+
+redux-saga 也是解决 redux 异步 action 的一个中间件，不过它与前面的解决方案思路有所不同，它另辟新径：
+
+1. redux-saga 完全基于 ES6 的生成器。
+2. 不污染 action，仍使用同步的 action 策略，而是通过监控 action，自动做处理。
+3. 所有带副作用的操作，如异步请求，业务控制逻辑代码都可以放到独立的 saga 中来。
+
+让异步行为成为架构中独立的一层(称为 saga)，既不在 action creator 中，也不和 reducer 沾边。
+
+它的出发点是把副作用 (Side effect，异步行为就是典型的副作用) 看成"线程"，可以通过普通的 action 去触发它，当副作用完成时也会触发 action 作为输出。
+
+详细的文档说明可以看: [Redux-saga Beginner Tutorial](https://redux-saga.js.org/docs/introduction/BeginnerTutorial.html)
+
+接下来我也会举很多例子来说明 redux-saga 的优点。
+
+我们老规矩先来改写我们之前的例子:
+
+```
+cd asynchronous_with_redux_saga/
+yarn 
+yarn start
+```
+
+首先先来看 actionCreator：
+
+```javascript
+import * as actionTypes from '../actionTypes'
+export default {
+    fetchNewsTitle: () => {
+        return {
+            type: actionTypes.FETCH_START
+        }
+    },
+	// ...
+}
+```
+
+是不是变得很干净，因为处理异步的逻辑已经在 creator 里面了，转移到 saga 中，我们来看一下 saga 是怎么写的。
+
+```javascript
+// sagas/index.js
+
+import { put, takeEvery } from 'redux-saga/effects'
+import * as actionTypes from '../actionTypes'
+import axios from 'axios'
+
+function* fetchNewsTitle() {
+    try {
+        const response = yield axios.get('/api/v1/topics')
+        if(response.status === 200) {
+            yield put({
+                type: actionTypes.FETCH_SUCCESS,
+                news: response.data,
+            })
+        }else {
+            throw new Error('fetch failure')
+        }
+    } catch(e) {
+        yield put({
+            type: actionTypes.FETCH_FAILURE
+        })
+    }
+}
+
+export default function* fecthData () {
+    yield takeEvery(actionTypes.FETCH_START, fetchNewsTitle)
+}
+```
+
+可以发现这里写的跟之前写的异步操作基本上是一模一样，上面的代码不理解，takeEvery 监听所有的 action，每当发现 ```action.type === FETCH_START``` 时执行 fetchNewsTitle 这个函数，注意这里只是做监听 action 的动作，并不会拦截 action，这说明 FETCH_START action 仍然会经过 reducer 去处理，剩下 fetchNewsTitle 函数就很好理解，就是执行所谓的异步操作，这里的 put 相当于 dispatch。
+
+最后我们需要在 store 里面使用 saga 中间件
+
+```javascript
+// store/index.js
+import createSagaMiddleware from 'redux-saga'
+import mySaga from '../sagas'
+
+const sagaMiddleware = createSagaMiddleware()
+
+// ...
+
+export default createStore(reducer, initValue, applyMiddleware(sagaMiddleware))
+sagaMiddleware.run(mySaga)
+```
+
+通过注册 saga 中间件并且 run 监听 saga 任务，也就是前面提到的 fecthData。
+
+基于这么一个简单的例子，我们可以看到 saga 将所有的带副作用的操作与 actionCreator 和 reducer 进行分离，通过监听 action 来做自动处理，相比 async action creator 的方案，它可以保证组件触发的 action 是纯对象。
+
+参考回答：[redux-saga 实践总结](https://zhuanlan.zhihu.com/p/23012870)
+
+它与 redux-thunk 编写异步的方式有着它各自的应用场景，没有优劣之分，所谓存在即合理。redux-saga 相对于这种方式，具有以下的特点：
+
+1. 生命周期有所不同，redux-saga 可以理解成一直运行与后台的长时事务，而 redux-thunk 是一个 action，因为 redux-saga 能做的事更多。
+2. redux-saga 有诸多声明式易测的 Effects，比如无阻塞调用，中断任务，这些特性在业务逻辑复杂的场景下非常适用。
+3. redux-saga 最具魅力的地方，是它保持了 action 的原义，保持 action 的简洁，把所有带副作用的地方独立开来，这些特性使得其在业务逻辑简单的场景下，也能保持代码清晰简洁。
+
+在我看来：redux-thunk + async/await 的方式学习成本低，比较适合不太复杂的异步交互场景。对于竞态判断，多重 action 组合，取消异步等场景下使用则显得乏力，redux-saga 在异步交互复杂的场景下仍能够让你清晰直观地编写代码，不过学习成本相对较高。
+
+以上我们介绍了三种 redux 异步方案，其实关于 redux 异步方案还有很多，比如：redux-observale，通过 rxjs 的方式来书写异步请求，也有像 redux-loop 这样的方式通过在 reducer 上做文章来达到异步效果。其实方案千千万万，各成一派，每种方案都有其适合的场景，结合自己实际的需求来选择你所使用的 redux 异步方案才最可贵。
+
+## thunk 和 saga 异步方案对比
+
+对于前面获取异步的例子，还没有结束，它仍存在着一些问题：
+
+1. 没有进行防抖处理，如果用户疯狂点击按钮，那么将会不断发起异步请求，这样无形之中就对带宽造成了浪费。
+2. 没有做竞态判断，点击按钮可以获取 CNode 标题并呈现，因为异步请求返回的时间具有不确定性，多次点击就可能出现后点击的请求先返回先渲染，而前面点击的请求后返回覆盖了最新的请求结果。
+3. 没有做取消处理，是想一下，在某些场景下，在等待的过程中，用户是有可能取消这个异步操作的，这时候就不呈现结果了。
+
+下面我们将重新改写一个例子，分别用 redux-thunk 和 redux-saga 对其进行处理上述的问题，并进行比较。
+
+
+
+
 
 
 

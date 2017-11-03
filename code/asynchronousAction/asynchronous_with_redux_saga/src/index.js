@@ -1,14 +1,14 @@
 import React from 'react'
 import { render } from 'react-dom'
 import store from './store'
-import NewsList from './views/newsList'
+import App from './views/App'
 import { Provider } from 'react-redux'
 
 
 
 render(
     <Provider store={ store }> 
-        <NewsList />
+        <App />
     </Provider>,
     document.getElementById('root')
 )

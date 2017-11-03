@@ -1,1 +1,2 @@
 export const UPDATE_DATA = 'UPDATE_DATA'
+export const CANCEL_UPDATE_DATA = 'CANCEL_UPDATE_DATA'

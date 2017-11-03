@@ -2,6 +2,7 @@
   "name": "asynchronous_with_redux_promise",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://cnodejs.org",  
   "dependencies": {
     "axios": "^0.17.0",
     "react": "^16.0.0",
