@@ -16,6 +16,7 @@ cd code/xxxx/
 #### | React 相关
 
 * [揭秘 React 状态管理](https://github.com/happylindz/react-state-management-tutorial)
+* [Redux 异步流最佳实践](https://github.com/happylindz/blog/issues/2)
 
 #### | ES6 
 
