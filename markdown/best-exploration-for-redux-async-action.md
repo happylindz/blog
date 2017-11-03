@@ -256,7 +256,7 @@ redux-thunk 这种方案对于小型的应用来说足够日常使用，然而�
 
 redux-thunk 思想很棒，但是其实代码是有一定的相似，比如其实整个代码都是针对请求、成功、失败三部分来处理的，这让我们自然联想到 Promise，同样也是分为 pending、fulfilled、rejected 三种状态。
 
-## Redux-promise：不推荐
+## Redux-promise：瘦身过度
 
 Promise 代表一种承诺，本用来解决异步回调地狱问题，首先我们先来看看 redux-promise 中间件的源码：
 
@@ -342,7 +342,7 @@ export default createStore(reducer, initValue, applyMiddleware(reduxPromise))
 
 ```javascript
 const thunk = ({ dispatch, getState }) => next => action => {
-	if(typeof action.async === 'function) {
+	if(typeof action.async === 'function') {
 	    return action.async(dispatch, getState);
 	}
 	return next(action);
