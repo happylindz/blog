@@ -1,25 +1,14 @@
-import { put, call, take, fork, cancel, throttle } from 'redux-saga/effects'
+import { put, call, take, fork, cancel } from 'redux-saga/effects'
 import * as actionTypes from '../actionTypes'
 
-let isFirst = true
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
-function* asyncAction() {
-    let promise = null
-    if(isFirst) {
-        isFirst = false
-        promise = new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(5000)
-            }, 5000)
-        })
-    }else {
-        promise = new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(1000)
-            }, 1000)
-        })
-    }
+function* asyncAction({ ms }) {
+    let promise = new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(ms)
+        }, ms)
+    })
     let payload = yield promise
     yield put({
         type: actionTypes.UPDATE_DATA,
@@ -34,7 +23,7 @@ export default function* () {
         if(task) {
             yield cancel(task)
         }
-        task = yield fork(asyncAction)
+        task = yield fork(asyncAction, action)
         yield call(delay, 1000)
     }
 }

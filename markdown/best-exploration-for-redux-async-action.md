@@ -108,7 +108,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         fetchNewsTitle:() => {
-			  xxx.fetchStart() 
+            xxx.fetchStart() 
         }
     }
 }
@@ -120,7 +120,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         fetchNewsTitle:() => {
-			  xxx.fetchStart(dispatch) 
+            xxx.fetchStart(dispatch) 
         }
     }
 }
@@ -506,6 +506,251 @@ sagaMiddleware.run(mySaga)
 3. 没有做取消处理，是想一下，在某些场景下，在等待的过程中，用户是有可能取消这个异步操作的，这时候就不呈现结果了。
 
 下面我们将重新改写一个例子，分别用 redux-thunk 和 redux-saga 对其进行处理上述的问题，并进行比较。
+
+我们要做的例子效果如下：
+
+![](../images/asynchronousAction/3.gif)
+
+1. 有两个按钮用来模拟异步请求，分别在 5s 和 1s 内响应数据，我们需要保证按钮点击的顺序性，即当 5s 后数据返回时不会覆盖掉最新数值 1000，保证页面上显示的数据永远是最后一次点击获取到的数据。
+2. 防抖处理，在 1000ms 内再次点击按钮不会进行响应。
+
+```
+cd race_with_redux_thunk/
+yarn 
+yarn start
+```
+
+查看 actionCreator：
+
+```javascript
+// actions/index.js
+import * as actionTypes from '../actionTypes'
+let nextId = 0
+let prev = 0
+export const updateData = (ms) => {
+     return (dispatch) => {
+        let id = ++nextId
+        let now = + new Date()
+        if(now - prev < 1000) {
+            return;
+        }
+        prev = now;
+
+        const checkLast = (action) => {
+            if(id === nextId) {
+                dispatch(action)
+            }
+        }
+        setTimeout(() => {
+            checkLast({
+                type: actionTypes.UPDATE_DATA,
+                payload: ms,                    
+            })
+        }, ms)
+    }
+}
+```
+
+1. 竞态处理：可以通过在 actionCreator 中添加模块变量 nextId，在执行函数的时候生成一个 id 与当前 nextId 值相同，最后当数据返回后，判断当前 id 是否与 nextId 相同值，如果相同，则证明这次操作是最后一次操作，从而保证该请求为最后一次请求。
+2. 防抖处理：另外通过变量 prev 来记录上次点击的时间，通过与当前时间之差与 1s 进行判断来决定是否执行后续操作，并且会更新 prev 值。
+
+如果是 redux-saga 重写这个例子，那么又是什么效果呢？
+
+```
+cd race_with_redux_saga/
+yarn 
+yarn start
+```
+
+首先 reducer 就不用那么麻烦，它只要给一个信号就可以了
+
+```javascript
+// actions/index.js
+import * as actionTypes from '../actionTypes'
+
+export const updateData = (ms) => {
+     return {
+        type: actionTypes.INITIAL,
+        ms
+     }
+}
+```
+
+重点是监听 INITIAL 的 saga 任务
+
+```javascript
+// sagas/index.js
+import { put, call, take, fork, cancel } from 'redux-saga/effects'
+import * as actionTypes from '../actionTypes'
+
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+
+function* asyncAction({ ms }) {
+    let promise = new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(ms)
+        }, ms)
+    })
+    let payload = yield promise
+    yield put({
+        type: actionTypes.UPDATE_DATA,
+        payload: payload
+    })
+}
+
+export default function* watchAsyncAction() {
+    let task 
+    while(true) {
+        const action = yield take(actionTypes.INITIAL)
+        if(task) {
+            yield cancel(task)
+        }
+        task = yield fork(asyncAction, action)
+        yield call(delay, 1000)
+    }
+}
+```
+
+watchAsyncAction 用于监听传递过来的 action 类型，虽然通过 while(true) 来写，不过因为是生成器并不具备执行完代码的能力，它代表会一直重复循环地监听每次 action。
+
+take 监听 INITIAL 类型的 action，首先判断之前有没有任务未执行完毕，如果有，则取消该任务，从而保证竞态判断，然后通过 fork 非阻塞调用，最后停顿一秒，call 代表阻塞调用，在这段时间内，该 saga 任务不再处理新进来的 action，所以在这段时间所有的 INITIAL action 都将会被忽略，从而进行防抖处理，put 相当于 dispatch 操作。
+
+通过这个简单例子的对比，我们可以看出，redux-saga 更加灵活，写起来比较优雅，代码可读性更强，你可以比较清晰地理解代码的行为，当然相应地你也要熟悉更多的基本概念，学习成本较高。
+
+另外值得一提的是因为 redux-saga 基于 ES6 的生成器，可以执行和归还函数的控制权，所以其可以处理更加复杂的业务场景，具有强大的异步流程控制。
+
+最后我们再通过一个例子来对比 thunk 和 saga 在书写上的差异，例子效果如下：
+
+![](../images/asynchronousAction/4.gif)
+
+点击按钮可以每秒增加 1，可以再次点击进行取消增加计数器，也可以通过 5s 后自动取消增加计数器。
+
+我们先来看看 redux-thunk 要如何处理：
+
+```
+cd cancellable_counter_with_redux_thunk/
+yarn 
+yarn start
+```
+
+在 action creator 中，我们需要创建两个定时器用来触发两个数字的更新。
+
+```javascript
+import {
+    INCREMENT,
+    COUNTDOWN,
+    COUNTDOWN_CANCEL,
+    COUNTDOWN_TERMIMATED
+} from '../actionTypes'
+
+let incrementTimer
+let countdownTimer
+
+const action = type => ({ type })
+
+export const increment = () => action(INCREMENT)
+
+export const terminateCountDown = () => (dispatch) => {
+    clearInterval(incrementTimer)
+    clearInterval(countdownTimer)
+    dispatch(action(COUNTDOWN_TERMIMATED))
+}
+
+export const cancelCountDown = () => (dispatch) => {
+    clearInterval(incrementTimer)
+    clearInterval(countdownTimer)
+    dispatch(action(COUNTDOWN_CANCEL))
+}
+
+export const incrementAsync = (time) => (dispatch) => {
+    incrementTimer = setInterval(() => {
+        dispatch(increment())
+    }, 1000)
+    dispatch({
+        value: time,
+        type: COUNTDOWN,
+    })
+    countdownTimer = setInterval(() => {
+        time--
+        if(time <= 0) {
+            dispatch(cancelCountDown())
+        }else {
+            dispatch({
+                value: time,
+                type: COUNTDOWN,
+            })
+        }
+    }, 1000)
+}
+```
+
+incrementAsync 开启两个计时器，用于增加计数器和倒计时，terminateCountDown 为人工触发按钮导致两个定时器被清除，而在 countdownTimer 定时器内部，随着时间流逝，当 time 小于 0 时触发 cancelCountDown，取消所有定时器。
+
+我们可以看出，redux-thunk 在处理这类异步流程控制时候有点力不从心，需要创建多个定时器来并行地改变数据，当场景更加复杂的时候代码就显得有点乱，可读性较差。
+
+再用 redux-saga 改写刚才的例子：
+
+```
+cd cancellable_counter_with_redux_saga/
+yarn 
+yarn start
+```
+
+```javascript
+// sagas/index.js
+import { 
+    INCREMENT_ASYNC, 
+    INCREMENT, 
+    COUNTDOWN,
+    COUNTDOWN_TERMIMATED,
+    COUNTDOWN_CANCEL,
+} from '../actionTypes'
+import { take, put, cancelled, call, race, cancel, fork } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
+
+const action = type => ({ type })
+
+function* incrementAsync() {
+    while(true) {
+        yield call(delay, 1000)
+        yield put(action(INCREMENT))
+    }
+}
+
+function* countdown({ ms }) {
+    let task = yield fork(incrementAsync)
+    try {
+        while(true) {  
+            yield put({
+                type: COUNTDOWN,
+                value: ms--,
+            }) 
+            yield call(delay, 1000)
+            if(ms <= 0) {
+                break;
+            }
+        }
+    } finally {
+        if(!(yield cancelled())) {
+            yield put(action(COUNTDOWN_CANCEL))
+        }
+        yield cancel(task)
+    }
+}
+
+export default function* watchIncrementAsync() {
+    while(true) {
+        const action = yield take(INCREMENT_ASYNC)
+        yield race([
+            call(countdown, action),
+            take(COUNTDOWN_TERMIMATED)
+        ])
+    }
+}
+```
+
+关于 Redux 异步控制就讲到这里，希望大家有所收获！
+
 
 
 

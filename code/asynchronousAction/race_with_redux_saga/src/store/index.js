@@ -4,7 +4,7 @@ import reducer from '../reducers'
 import mySagas from '../sagas'
 
 const initValue = {
-    data: 20
+    data: 0
 }
 
 const sagaMiddleware = createSagaMiddleware()

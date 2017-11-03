@@ -24,10 +24,3 @@ export const updateData = (ms) => {
         }, ms)
     }
 }
-
-export const cancelUpdateData = () => {
-    nextId ++
-    return {
-        type: actionTypes.CANCEL_UPDATE_DATA
-    }
-}

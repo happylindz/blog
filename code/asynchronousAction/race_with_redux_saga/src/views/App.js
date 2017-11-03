@@ -4,8 +4,9 @@ import * as actions from '../actions'
 
 const App = ({ data, fetchData }) => {
     return (<div>
-        <button onClick={ fetchData } >Fetch Data</button>
-        { data }
+        <button onClick={ () => fetchData(5000) } >Fetch data in 5000ms</button>
+        <button onClick={ () => fetchData(1000) } >Fetch data in 1000ms</button>
+        waiting time: { data }
     </div>)
 }
 
@@ -17,8 +18,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchData: () => {
-            dispatch(actions.updateData())
+        fetchData: (ms) => {
+            dispatch(actions.updateData(ms))
         }
     }
 }

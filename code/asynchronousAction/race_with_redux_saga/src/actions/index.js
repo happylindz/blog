@@ -1,7 +1,8 @@
 import * as actionTypes from '../actionTypes'
 
-export const updateData = () => {
+export const updateData = (ms) => {
      return {
-        type: actionTypes.INITIAL
+        type: actionTypes.INITIAL,
+        ms
      }
 }
