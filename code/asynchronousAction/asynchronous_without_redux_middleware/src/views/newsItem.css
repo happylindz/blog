@@ -1,0 +1,12 @@
+.news-item {
+    position: relative;
+}
+.news-item > p {
+    padding-right: 30px;
+}
+.news-item > button {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%)
+}

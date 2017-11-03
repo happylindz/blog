@@ -2,7 +2,7 @@
 
 Lindz's blog -- 喜欢的话请点 star，想订阅点 watch
 
-> 关注 Javascript, ES6, React, Redux、性能优化等
+> 关注 Javascript, ES6, React, Redux, Vue, Node, 性能优化等
 
 我的知乎专栏： [敲代码，学编程](https://zhuanlan.zhihu.com/learncoding)
 

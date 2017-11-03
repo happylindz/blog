@@ -1,4 +1,4 @@
-[原文地址](www.baidu.com)
+[原文地址](https://github.com/happylindz/blog/issues/1)
 
 # 你可能不知道的 Promise 对象
 
