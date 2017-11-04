@@ -1,5 +1,5 @@
 import React from 'react'
-import './newsItem.css'
+// import './newsItem.css'
 import actionCreator from '../actionCreator'
 import { connect } from 'react-redux'
 
