@@ -1,0 +1,19 @@
+{
+    "name": "opener",
+    "description": "Opens stuff, like webpages and files and executables, cross-platform",
+    "version": "1.4.3",
+    "author": "Domenic Denicola <d@domenic.me> (https://domenic.me/)",
+    "license": "(WTFPL OR MIT)",
+    "repository": "domenic/opener",
+    "main": "opener.js",
+    "bin": "opener.js",
+    "files": [
+        "opener.js"
+    ],
+    "scripts": {
+        "lint": "jshint opener.js"
+    },
+    "devDependencies": {
+        "jshint": "^2.6.3"
+    }
+}

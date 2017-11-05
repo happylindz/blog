@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>client</title>
+</head>
+<body>
+	<script>
+		document.domain = 'example.com';
+		let ifr = document.createElement('iframe');
+		ifr.src = 'http://sub2.example.com/data.html';
+		ifr.style.display = 'none';
+		document.body.append(ifr);
+		ifr.onload = function() {
+			let win = ifr.contentWindow;
+			console.log(win.data);
+		}
+	</script>
+</body>
+</html>

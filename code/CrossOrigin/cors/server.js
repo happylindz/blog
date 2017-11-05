@@ -2,7 +2,8 @@
 require('http').createServer((req, res) => {
 
 	res.writeHead(200, {
-		'Access-Control-Allow-Origin': 'http://localhost:8080'
+		'Access-Control-Allow-Origin': 'http://localhost:8080',
+		'Content-Type': 'text/html;charset=utf-8',
 	});
 	res.end('这是你要的数据：1111');
 
