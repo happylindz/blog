@@ -84,7 +84,7 @@ console.log('启动服务，监听 127.0.0.1:3000');
 
 之所以能用脚本指令，是因为我在 package.json 里面设置好了脚本命令：
 
-```json
+```
 {
   // 输入 yarn jsonp 等于 "node ./jsonp/server.js & http-server ./jsonp"
   "scripts": {
@@ -134,7 +134,7 @@ CORS 需要浏览器和服务器同时支持才可以生效，对于开发者来
 
 前端逻辑很简单，只要正常发起 ajax 请求即可:
 
-```javascript
+```html
 // cors/index.html
 <script>
 	const xhr = new XMLHttpRequest();
@@ -192,7 +192,7 @@ CORS 的优缺点：
 
 代码如下：
 
-```
+```javascript
 // serverProxy/server.js
 const url = require('url');
 const http = require('http');
@@ -439,7 +439,7 @@ postMessage 是 HTML5 新增加的一项功能，跨文档消息传输(Cross Doc
 127.0.0.1 sub2.example.com
 ```
 
-之后打开 nginx 的配置文件：/usr/local/etc/nginx/nginx.conf，并在 http 模块里添加：
+之后打开 nginx 的配置文件：/usr/local/etc/nginx/nginx.conf，并在 http 模块里添加，记得输入 nginx 启动 nginx 服务：
 
 ```
 /usr/local/etc/nginx/nginx.conf
@@ -463,7 +463,7 @@ http {
 }
 ```
 
-相当于是讲 ```sub1.example.com``` 和 ```sub2.example.com``` 这些域名地址指向本地 ```127.0.0.1```，然后用 nginx 做反向代理分别映射到 8080 和 8081 端口。
+相当于是讲 ```sub1.example.com``` 和 ```sub2.example.com``` 这些域名地址指向本地 ```127.0.0.1:80```，然后用 nginx 做反向代理分别映射到 8080 和 8081 端口。
 
 这样访问 ```sub1(2).example.com``` 等于访问 ```127.0.0.1:8080(1)```
 
