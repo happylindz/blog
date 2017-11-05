@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>client</title>
+</head>
+<body>
+	<iframe src="http://localhost:8081/data.html" style='display: none;'></iframe>
+	<script>
+		window.onload = function() {
+			let targetOrigin = 'http://localhost:8081';
+			window.frames[0].postMessage('index.html 的 data!', targetOrigin);
+		}
+		window.addEventListener('message', function(e) {
+			console.log('index.html 接收到的消息:', e.data);
+		});
+	</script>
+</body>
+</html>
