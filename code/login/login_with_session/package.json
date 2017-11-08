@@ -1,0 +1,16 @@
+{
+  "name": "logIn_with_session",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "ejs": "^2.5.7",
+    "koa": "^2.4.1",
+    "koa-body": "^2.5.0",
+    "koa-ejs": "^4.1.0",
+    "koa-route": "^3.2.0",
+    "koa-router": "^7.2.1",
+    "koa-static": "^4.0.1",
+    "koa-views": "^6.1.1"
+  }
+}

@@ -1,0 +1,12 @@
+<% include header.ejs %>
+
+<div class="container">
+    <form action="/login" method="post">
+        <p>姓名: <input type="text" name="name" /></p>
+        <p>密码: <input type="password" name="password" /></p>    
+        <input type="submit" value="登陆" />  
+        <a href="/register  ">注册</a>
+    </form>
+</div>
+
+<% include footer.ejs %>
