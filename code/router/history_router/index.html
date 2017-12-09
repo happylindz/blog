@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Hash Router</title>
+  <style>
+    ul > li {
+      list-style: none;
+      display: inline-block;
+    }
+    #content {
+      margin: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <ul>
+      <li><a data-href="/" href="#">home</a></li>
+      <li><a data-href="/about" href="#">about</a></li>
+      <li><a data-href="/topics" href="#">topics</a></li>
+    </ul>
+    <div id="content"></div>
+  </div>
+  <script src="js/router.js"></script>
+  <script>
+    const router = new Router();
+    router.init();
+    router.route('/', function() {
+      document.getElementById('content').innerHTML = 'Home';
+    });
+    router.route('/about', function() {
+      document.getElementById('content').innerHTML = 'About';
+    });
+    router.route('/topics', function() {
+      document.getElementById('content').innerHTML = 'Topics';
+    });
+    setTimeout(() => {
+      history.pushState({}, null, '/about');
+      router.updateView('/about');
+    }, 2000);
+  </script>
+</body>
+</html>
