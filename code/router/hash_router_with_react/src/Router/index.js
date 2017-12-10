@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 
 function matchPath(hash, options) {
+  // 截断 hash 首位的 #
   hash = hash.slice(1);
   const { exact = false, path } = options;
+  // 如果没有传入 path，代表始终匹配
   if (!path) {
     return {
       path: null,
@@ -17,7 +19,6 @@ function matchPath(hash, options) {
   }
   const url = match[0];
   const isExact = hash === url;
-
   if (exact && !isExact) {
     // 匹配上了，但不是精确匹配
     return null;

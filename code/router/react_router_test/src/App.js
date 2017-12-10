@@ -22,15 +22,9 @@ class App extends Component {
       <Router>
         <div>
           <ul>
-            <li>
-              <Link to="/">home</Link>
-            </li>
-            <li>
-              <Link to="/about">about</Link>
-            </li>
-            <li>
-              <Link to="/topics">topics</Link>
-            </li>
+            <li><Link to="/">home</Link></li>
+            <li><Link to="/about">about</Link></li>
+            <li><Link to="/topics">topics</Link></li>
           </ul>
           <Route exact path="/" component={HomeView} />
           <Route path="/about" component={AboutView} />

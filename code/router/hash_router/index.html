@@ -7,12 +7,12 @@
   <title>Hash Router</title>
   <style>
     ul > li {
-      list-style: none;
-      display: inline-block;
-    }
-    #content {
-      margin: 40px;
-    }
+          display: inline-block;
+          list-style: none;
+        }
+        #content {
+          margin: 40px;
+        }
   </style>
 </head>
 <body>
@@ -37,9 +37,6 @@
     router.route('/topics', function() {
       document.getElementById('content').innerHTML = 'Topics';
     });
-    setTimeout(() => {
-      location.hash = '/about';
-    }, 2000);
   </script>
 </body>
 </html>
