@@ -61,26 +61,32 @@ class Router {
 
 ```html
 <div id="app">
-	<ul>
-	  <li><a href="#/">home</a></li>
-	  <li><a href="#/about">about</a></li>
-	  <li><a href="#/topics">topics</a></li>
-	</ul>
-	<div id="content"></div>
+  <ul>
+    <li>
+      <a href="#/">home</a>
+    </li>
+    <li>
+      <a href="#/about">about</a>
+    </li>
+    <li>
+      <a href="#/topics">topics</a>
+    </li>
+  </ul>
+  <div id="content"></div>
 </div>
 <script src="js/router.js"></script>
 <script>
-	const router = new Router();
-	router.init();
-	router.route('/', function() {
-	  document.getElementById('content').innerHTML = 'Home';
-	});
-	router.route('/about', function() {
-	  document.getElementById('content').innerHTML = 'About';
-	});
-	router.route('/topics', function() {
-	  document.getElementById('content').innerHTML = 'Topics';
-	});
+  const router = new Router();
+  router.init();
+  router.route('/', function () {
+    document.getElementById('content').innerHTML = 'Home';
+  });
+  router.route('/about', function () {
+    document.getElementById('content').innerHTML = 'About';
+  });
+  router.route('/topics', function () {
+    document.getElementById('content').innerHTML = 'Topics';
+  });
 </script>
 ```
 
@@ -399,18 +405,18 @@ Route 组件大致相同，不同在于注册和卸载钩子函数的不同：�
 
 ```javascript
 export class Route extends Component {
-	componentWillMount() {
-		window.addEventListener('popstate', this.handlePopState);
-		register(this);
-	}
-	componentWillUnmount() {
-		window.removeEventListener('popstate', this.handlePopState);
-		unregister(this);
-	}
-	handlePopState = () => {
-		this.forceUpdate();
-	}
-	// ...
+  componentWillMount() {
+    window.addEventListener('popstate', this.handlePopState);
+    register(this);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('popstate', this.handlePopState);
+    unregister(this);
+  }
+  handlePopState = () => {
+    this.forceUpdate();
+  };
+  // ...
 }
 ```
 
@@ -418,18 +424,20 @@ Link 组件实现：需要阻止默认事件并且当点击的时候需要广播
 
 ```javascript
 export class Link extends Component {
-	handleClick = (e) => {
-		e.preventDefault();
-		const { to } = this.props;
-		window.history.pushState({}, null, to);
-		instances.forEach(instance => instance.forceUpdate());
-	}
-	render() {
-		const { to, children } = this.props;
-		return (<a href={to} onClick={this.handleClick}>
-				{ children }
-			</a>)
-	}
+  handleClick = e => {
+    e.preventDefault();
+    const { to } = this.props;
+    window.history.pushState({}, null, to);
+    instances.forEach(instance => instance.forceUpdate());
+  };
+  render() {
+    const { to, children } = this.props;
+    return (
+      <a href={to} onClick={this.handleClick}>
+        {children}
+      </a>
+    );
+  }
 }
 ```
 
