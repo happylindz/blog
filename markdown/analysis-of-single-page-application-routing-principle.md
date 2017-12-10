@@ -6,7 +6,7 @@
 
 如今 React, Vue 等视图层框架大行其道，为前端开发提供了不少便利性，但是仅仅只是这些的话，缺少完善的前端路由系统，在单页应用中，我们希望能够通过前端路由来控制整个单页面应用，而后端仅仅只是获取数据接口。本文主要围绕以下三个问题来进行阐述：
 
-1. 单页面应用为什么需要路由系统？
+1. 单页面应用为什么需要路由系统？x`
 2. 单页面应用路由实现原理是什么？
 3. 如何实现一个简单的 react-router？
 
@@ -93,7 +93,7 @@ yarn hash
 // open http://localhost:8080
 ```
 
-![](/Users/lindongzhou/blog/images/router/1.gif)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/router/1.gif)
 
 值得注意的是在第一次进入页面的时候，需要触发一次 onhashchange 事件，保证页面能够正常显示，用 hash 在做路由跳转的好处在于简单实用，便于理解，但是它虽然解决解决单页面应用路由控制的问题，但是在 url 却引入 # 号，不够美观。
 
@@ -211,7 +211,7 @@ yarn history
 // open http://localhost:8080
 ```
 
-![](/Users/lindongzhou/blog/images/router/2.gif)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/router/2.gif)
 
 ## React-router 用法
 
@@ -258,7 +258,7 @@ class App extends Component {
 
 这是 RR4 的标准用法，实际运行效果如下：
 
-![](/Users/lindongzhou/blog/images/router/3.gif)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/router/3.gif)
 
 可以看出，当 path 匹配上路由时则显示 component，匹配不上则不显示，如果没有 path 字段则默认一直显示，而 exact 字段则表示必须要完全匹配，避免像 ```path='/'``` 匹配上 ```path='/about'``` 这样的情况。
 
@@ -369,7 +369,7 @@ yarn start
 
 实现效果如下：
 
-![](/Users/lindongzhou/blog/images/router/4.gif)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/router/4.gif)
 
 基于 React 的 Hash 路由系统实现比较简单，而 History 版的就会相对复杂一些，下面就来实现吧。
 
@@ -377,7 +377,7 @@ yarn start
 
 根据前面的 history 路由的实现，基于 React 的路由也是十分类似。
 
-![](/Users/lindongzhou/blog/images/router/5.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/router/5.png)
 
 图片出处：[单页面应用路由实现原理：以 React-Router 为例](https://github.com/youngwind/blog/issues/109)
 
@@ -443,7 +443,7 @@ yarn start
 
 实现效果：
 
-![](/Users/lindongzhou/blog/images/router/6.gif)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/router/6.gif)
 
 虽然点击前进后退按钮并不会触发所有组件更新，但上面的实现效果可能也不太优雅，因为单页应用中如果存在大量 Route 组件时，每次点击 Link 链接时候都需要迫使所有 Route 组件进行重渲染。
 
