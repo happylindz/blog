@@ -1,6 +1,6 @@
-# 剖析单页面应用路由实现原理
-
 [原文地址](https://github.com/happylindz/blog/issues/4)
+
+# 剖析单页面应用路由实现原理
 
 ## 前言
 

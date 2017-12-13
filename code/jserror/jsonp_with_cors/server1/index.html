@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    window.onerror = function (msg, url, row, col, error) {
+      console.log('我知道错误了，也知道错误信息');
+      console.log({
+        msg,  url,  row, col, error
+      })
+      return true;
+    };
+    function jsonpCallback(data) {
+      console.log(data);
+    }
+    const url = 'http://localhost:8081/data?callback=jsonpCallback';
+    const script = document.createElement('script');
+    script.crossOrigin = 'anonymous';
+    script.src = url;
+    document.body.appendChild(script);
+  </script>
+</body>
+</html>

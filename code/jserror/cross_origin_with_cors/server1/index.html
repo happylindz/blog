@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CORS</title>
+</head>
+<body>
+  <script>
+    window.onerror = function (msg, url, row, col, error) {
+      console.log('我知道错误了，也知道错误信息');
+      console.log({
+        msg,  url,  row, col, error
+      })
+      return true;
+    };
+  </script>
+  <script src="http://127.0.0.1:8081/test.js" crossorigin></script>
+</body>
+</html>

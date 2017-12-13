@@ -74,9 +74,9 @@ console.log('启动服务，监听 127.0.0.1:3000');
 ```html
 // jsonp/index.html
 <script>
-    function jsonpCallback(data) {
-        alert('获得 X 数据:' + data.x);
-    }
+	function jsonpCallback(data) {
+		alert('获得 X 数据:' + data.x);
+	}
 </script>
 <script src="http://127.0.0.1:3000?callback=jsonpCallback"></script>
 ```

@@ -1,0 +1,25 @@
+{
+  "name": "jserror",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "nocors": "http-server ./cross_origin_without_cors/server1/ -p 8080 & http-server ./cross_origin_without_cors/server2/ -p 8081",
+    "cors": "http-server ./cross_origin_with_cors/server1/ -p 8080 & node ./cross_origin_with_cors/server2/index.js",
+    "jsonp": "http-server ./jsonp_with_cors/server1/ -p 8080 & node ./jsonp_with_cors/server2/index.js",
+    "jsonpjq": "http-server ./jsonp_with_jquery/server1/ -p 8080 & node ./jsonp_with_jquery/server2/index.js",
+    "iframe": "http-server ./iframe/ -p 8080"    
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "http-server": "^0.10.0"
+  },
+  "devDependencies": {
+    "koa": "^2.4.1",
+    "koa-cors": "0.0.16",
+    "koa-route": "^3.2.0",
+    "koa-static": "^4.0.2"
+  }
+}
