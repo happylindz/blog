@@ -30,7 +30,7 @@
 </script>
 ```
 
-![](/Users/lindongzhou/blog/images/jserror/11.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jserror/11.png)
 
 在对脚本错误进行上报之前，我们需要对异常进行处理，程序需要先感知到脚本错误的发生，然后再谈异常上报。
 
@@ -55,7 +55,7 @@ try {
 }
 ```
 
-![](/Users/lindongzhou/blog/images/jserror/1.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jserror/1.png)
 
 然而对于语法错误和异步错误就捕捉不到了。
 
@@ -70,7 +70,7 @@ try {
 }
 ```
 
-![](/Users/lindongzhou/blog/images/jserror/2.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jserror/2.png)
 
 一般语法错误在编辑器就会体现出来，常表现的错误信息为： Uncaught SyntaxError: Invalid or unexpected token xxx 这样。但是这种错误会直接抛出异常，常使程序崩溃，一般在编码时候容易观察得到。
 
@@ -87,7 +87,7 @@ try {
 }
 ```
 
-![](/Users/lindongzhou/blog/images/jserror/3.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jserror/3.png)
 
 除非你在 setTimeout 函数中再套上一层 try-catch，否则就无法感知到其错误，但这样代码写起来比较啰嗦。
 
@@ -115,7 +115,7 @@ window.onerror 捕获异常能力比 try-catch 稍微强点，无论是异步还
 error;
 ```
 
-![](/Users/lindongzhou/blog/images/jserror/4.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jserror/4.png)
 
 示例：异步错误
 
@@ -132,7 +132,7 @@ setTimeout(() => {
 });
 ```
 
-![](/Users/lindongzhou/blog/images/jserror/5.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jserror/5.png)
 
 然而 window.onerror 对于语法错误还是无能为力，所以我们在写代码的时候要尽可能避免语法错误的，不过一般这样的错误会使得整个页面崩溃，还是比较容易能够察觉到的。
 
@@ -140,7 +140,7 @@ setTimeout(() => {
 
 需要注意的是，window.onerror 函数只有在返回 true 的时候，异常才不会向上抛出，否则即使是知道异常的发生控制台还是会显示 Uncaught Error: xxxxx。
 
-![](/Users/lindongzhou/blog/images/jserror/6.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jserror/6.png)
 
 关于 window.onerror 还有两点需要值得注意
 
@@ -162,7 +162,7 @@ setTimeout(() => {
 <img src="./404.png">
 ```
 
-![](/Users/lindongzhou/blog/images/jserror/7.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jserror/7.png)
 
 由于网络请求异常不会事件冒泡，因此必须在捕获阶段将其捕捉到才行，但是这种方式虽然可以捕捉到网络请求的异常，但是无法判断 HTTP 的状态是 404 还是其他比如 500 等等，所以还需要配合服务端日志才进行排查分析才可以。
 
@@ -179,7 +179,7 @@ window.addEventListener('error', (msg, url, row, col, error) => {
 <img src="./404.png" alt="">
 ```
 
-![](/Users/lindongzhou/blog/images/jserror/8.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jserror/8.png)
 
 这点知识还是需要知道，要不然用户访问网站，图片 CDN 无法服务，图片加载不出来而开发人员没有察觉就尴尬了。
 
@@ -205,7 +205,7 @@ new Promise((resolve) => {
 });
 ```
 
-![](/Users/lindongzhou/blog/images/jserror/9.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jserror/9.png)
 
 虽然在写 Promise 实例的时候养成最后写上 catch 函数是个好习惯，但是代码写多了就容易糊涂，忘记写 catch。
 
@@ -229,11 +229,11 @@ new Promise((resolve) => {
 });
 ```
 
-![](/Users/lindongzhou/blog/images/jserror/10.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jserror/10.png)
 
 当然，如果你的应用没有做 Promise 全局异常处理的话，那很可能就像某乎首页这样：
 
-![](/Users/lindongzhou/blog/images/jserror/14.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jserror/14.png)
 
 ## 异常上报方式
 
@@ -265,13 +265,13 @@ npm install
 
 因为我们在线上的版本，经常做静态资源 CDN 化，这就会导致我们常访问的页面跟脚本文件来自不同的域名，这时候如果没有进行额外的配置，就会容易产生 Script error。
 
-![](/Users/lindongzhou/blog/images/jserror/13.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jserror/13.png)
 
 可通过 ```npm run nocors``` 查看效果。
 
 Script error 是浏览器在同源策略限制下产生的，浏览器处于对安全性上的考虑，当页面引用非同域名外部脚本文件时中抛出异常的话，此时本页面是没有权利知道这个报错信息的，取而代之的是输出 Script error 这样的信息。
 
-![](/Users/lindongzhou/blog/images/jserror/12.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jserror/12.png)
 
 这样做的目的是避免数据泄露到不安全的域中，举个简单的例子，
 
@@ -323,7 +323,7 @@ app.listen(8081, () => {
 });
 ```
 
-![](/Users/lindongzhou/blog/images/jserror/15.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jserror/15.png)
 
 读者可通过 ```npm run cors``` 详细的跨域知识我就不展开了，有兴趣可以看看我之前写的文章：[跨域，你需要知道的全在这里](https://github.com/happylindz/blog/issues/3)
 
@@ -351,7 +351,7 @@ document.body.appendChild(script);
 
 因为返回的信息会当做脚本文件来执行，一旦返回的脚本内容出错了，也是无法捕捉到错误的信息。
 
-![](/Users/lindongzhou/blog/images/jserror/16.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jserror/16.png)
 
 解决办法也不难，跟之前一样，在添加动态添加脚本的时候加上 crossOrigin，并且在后端配上相应的 CORS 字段即可.
 
@@ -364,7 +364,7 @@ document.body.appendChild(script);
 
 读者可以通过 ```npm run jsonp``` 查看效果
 
-![](/Users/lindongzhou/blog/images/jserror/17.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jserror/17.png)
 
 知道原理之后你可能会觉得没什么，不就是给每个动态生成的脚本添加 crossOrigin 字段嘛，但是在实际工程中，你可能是面向很多库来编程，比如使用 jQuery，Seajs 或者 webpack 来异步加载脚本，许多库封装了异步加载脚本的能力，以 jQeury 为例你可能是这样来触发异步脚本。
 
@@ -409,7 +409,7 @@ $.ajax({
 
 效果也是一样的，读者可以通过 ```npm run jsonpjq``` 来查看效果：
 
-![](/Users/lindongzhou/blog/images/jserror/18.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jserror/18.png)
 
 这样重写 createElement 理论上没什么问题，但是入侵了原本的代码，不保证一定不会出错，在工程上还是需要多尝试下看看再使用，可能存在兼容性上问题，如果你觉得会出现什么问题的话也欢迎留言讨论下。
 
@@ -438,7 +438,7 @@ $.ajax({
 
 读者可以通过 ```npm run iframe``` 查看效果：
 
-![](/Users/lindongzhou/blog/images/jserror/19.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jserror/19.png)
 
 如果你嵌入的 iframe 页面和你的主站不是同个域名的，但是 iframe 内容不属于第三方，是你可以控制的，那么可以通过与 iframe 通信的方式将异常信息抛给主站接收。与 iframe 通信的方式有很多，常用的如：postMessage，hash 或者 name 字段跨域等等，这里就不展开了，感兴趣的话可以看：[跨域，你需要知道的全在这里](https://github.com/happylindz/blog/issues/3)
 
@@ -446,8 +446,11 @@ $.ajax({
 
 ### 压缩代码如何定位到脚本异常位置
 
+线上的代码几乎都经过了压缩处理，几十个文件打包成了一个并丑化代码，当我们收到 ```a is not defined``` 的时候，我们根本不知道这个变量 a 究竟是什么含义，此时报错的错误日志显然是无效的。
 
+第一想到的办法是利用 sourcemap 定位到错误代码的具体位置，详细内容可以参考：[Sourcemap 定位脚本错误](https://github.com/joeyguo/blog/issues/14)
 
+另外也可以通过在打包的时候，在每个合并的文件之间添加几行空格，并相应加上一些注释，这样在定位问题的时候很容易可以知道是哪个文件报的错误，然后再通过一些关键词的搜索，可以快速地定位到问题的所在位置。
 
 ### 收集异常信息量太多，怎么办
 
@@ -466,7 +469,7 @@ Reporter.send = function(data) {
 
 上面差不多是我对前端代码监控的一些理解，说起来容易，但是一旦在工程化运用，难免需要考虑到兼容性等种种问题，读者可以通过自己的具体情况进行调整，前端代码异常监控对于我们的网站的稳定性起着至关重要的作用。如若文中所有不对的地方，还望指正。
 
-### 参考链接
+### 参考文章
 
 * [脚本错误量极致优化-监控上报与Script error](https://github.com/joeyguo/blog/issues/13)
 * [前端代码异常日志收集与监控](http://www.cnblogs.com/hustskyking/p/fe-monitor.html)

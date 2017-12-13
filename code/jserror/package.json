@@ -8,7 +8,8 @@
     "cors": "http-server ./cross_origin_with_cors/server1/ -p 8080 & node ./cross_origin_with_cors/server2/index.js",
     "jsonp": "http-server ./jsonp_with_cors/server1/ -p 8080 & node ./jsonp_with_cors/server2/index.js",
     "jsonpjq": "http-server ./jsonp_with_jquery/server1/ -p 8080 & node ./jsonp_with_jquery/server2/index.js",
-    "iframe": "http-server ./iframe/ -p 8080"    
+    "iframe": "http-server ./iframe/ -p 8080",
+    "sourcemaps": "http-server ./sourcemap/public/ -p 8080"
   },
   "keywords": [],
   "author": "",
