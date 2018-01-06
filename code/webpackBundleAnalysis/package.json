@@ -1,12 +1,18 @@
 {
-  "name": "webpackBundleAnalysis",
+  "name": "webpack-bundle-analysis",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:single": "webpack --config ./config/webpack.config.single.js",
+    "build:multiple": "webpack --config ./config/webpack.config.multiple.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^0.28.8",
+    "style-loader": "^0.19.1",
+    "webpack": "^1.15.0"
+  }
 }
