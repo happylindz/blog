@@ -60,29 +60,24 @@ module.exports = {
 // dist/index.xxxx.js
 (function(modules) {
   // 已经加载过的模块
- 	var installedModules = {};
+  var installedModules = {};
 
   // 模块加载函数
- 	function __webpack_require__(moduleId) {
-
- 		if(installedModules[moduleId]) {
- 			return installedModules[moduleId].exports;
- 		}
- 		var module = installedModules[moduleId] = {
- 			i: moduleId,
- 			l: false,
- 			exports: {}
- 		};
-
- 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
- 		module.l = true;
-
- 		return module.exports;
+  function __webpack_require__(moduleId) {
+    if(installedModules[moduleId]) {
+      return installedModules[moduleId].exports;
+    }
+    var module = installedModules[moduleId] = {
+      i: moduleId,
+      l: false,
+      exports: {}
+    };
+    modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+    module.l = true;
+    return module.exports;
   }
- 	return __webpack_require__(__webpack_require__.s = 3);
- })
- ([
+  return __webpack_require__(__webpack_require__.s = 3);
+})([
 /* 0 */
 (function(module, exports, __webpack_require__) {
   var util = __webpack_require__(1);
@@ -227,50 +222,48 @@ pageX.xxxx.js     // 业务代码
 ```javascript
 // dist/mainifest.xxxx.js
 (function(modules) { 
- 	window["webpackJsonp"] = function webpackJsonpCallback(chunkIds, moreModules) {
- 		var moduleId, chunkId, i = 0, callbacks = [];
- 		for(;i < chunkIds.length; i++) {
- 			chunkId = chunkIds[i];
- 			if(installedChunks[chunkId])
- 				callbacks.push.apply(callbacks, installedChunks[chunkId]);
- 			installedChunks[chunkId] = 0;
- 		}
- 		for(moduleId in moreModules) {
- 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
- 				modules[moduleId] = moreModules[moduleId];
- 			}
- 		}
- 		while(callbacks.length)
- 			callbacks.shift().call(null, __webpack_require__);
- 		if(moreModules[0]) {
- 			installedModules[0] = 0;
- 			return __webpack_require__(0);
- 		}
- 	};
- 	var installedModules = {};
- 	var installedChunks = {
- 		4:0
- 	};
- 	function __webpack_require__(moduleId) {
+  window["webpackJsonp"] = function webpackJsonpCallback(chunkIds, moreModules) {
+    var moduleId, chunkId, i = 0, callbacks = [];
+    for(;i < chunkIds.length; i++) {
+      chunkId = chunkIds[i];
+      if(installedChunks[chunkId])
+        callbacks.push.apply(callbacks, installedChunks[chunkId]);
+      installedChunks[chunkId] = 0;
+    }
+    for(moduleId in moreModules) {
+      if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+        modules[moduleId] = moreModules[moduleId];
+      }
+    }
+    while(callbacks.length)
+      callbacks.shift().call(null, __webpack_require__);
+    if(moreModules[0]) {
+      installedModules[0] = 0;
+      return __webpack_require__(0);
+    }
+  };
+  var installedModules = {};
+  var installedChunks = {
+    4:0
+  };
+  function __webpack_require__(moduleId) {
     // 和单文件一致
- 	}
- 	__webpack_require__.e = function requireEnsure(chunkId, callback) {
- 		if(installedChunks[chunkId] === 0)
+  }
+  __webpack_require__.e = function requireEnsure(chunkId, callback) {
+    if(installedChunks[chunkId] === 0)
       return callback.call(null, __webpack_require__);
-       
- 		if(installedChunks[chunkId] !== undefined) {
- 			installedChunks[chunkId].push(callback);
- 		} else {
- 			installedChunks[chunkId] = [callback];
- 			var head = document.getElementsByTagName('head')[0];
- 			var script = document.createElement('script');
- 			script.type = 'text/javascript';
- 			script.charset = 'utf-8';
- 			script.async = true;
-
- 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"pageA","1":"pageB","3":"vendor"}[chunkId]||chunkId) + "." + {"0":"e72ce7d4","1":"69f6bbe3","2":"9adbbaa0","3":"53fa02a7"}[chunkId] + ".js";
- 			head.appendChild(script);
- 		}
+    if(installedChunks[chunkId] !== undefined) {
+      installedChunks[chunkId].push(callback);
+    } else {
+      installedChunks[chunkId] = [callback];
+      var head = document.getElementsByTagName('head')[0];
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.charset = 'utf-8';
+      script.async = true;
+      script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"pageA","1":"pageB","3":"vendor"}[chunkId]||chunkId) + "." + {"0":"e72ce7d4","1":"69f6bbe3","2":"9adbbaa0","3":"53fa02a7"}[chunkId] + ".js";
+      head.appendChild(script);
+    }
   };
 })([]);
 ```
@@ -401,7 +394,9 @@ webpackJsonp([1,4],[
 ]);
 ```
 
-当 pageB 进行某种操作需要加载 utilC 时就会执行 ```__webpack_require__.e(2, callback)``` 2，代表需要加载的模块 chunkId(utilC)，异步加载 utilC 并将 callback 添加到 installedChunks[2] 中，然后当 utilC 的 chunk 文件加载完毕后，chunkIds 包含 2，发现 installedChunks[2] 是个数组，里面还有之前还未执行的 callback 函数，既然这样，那我就将我自己带来的模块先放到 modules 中，然后再统一执行之前未执行完的 callbacks 函数(可能存在多个)，这也就是说明这里的先后顺序：
+当 pageB 进行某种操作需要加载 utilC 时就会执行 ```__webpack_require__.e(2, callback)``` 2，代表需要加载的模块 chunkId(utilC)，异步加载 utilC 并将 callback 添加到 installedChunks[2] 中，然后当 utilC 的 chunk 文件加载完毕后，chunkIds 包含 2，发现 installedChunks[2] 是个数组，里面还有之前还未执行的 callback 函数。
+
+既然这样，那我就将我自己带来的模块先放到 modules 中，然后再统一执行之前未执行完的 callbacks 函数(可能存在多个)，这也就是说明这里的先后顺序：
 
 ```javascript
 // 先将 moreModules 合并到 modules, 再去执行 callbacks, 不然之前未执行的 callback 依赖于新来的模块，你不放进 module 我岂不是得不到想要的模块
