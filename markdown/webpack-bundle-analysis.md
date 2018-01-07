@@ -441,31 +441,31 @@ __webpack_require__.e = function requireEnsure(chunkId) {
   var promise = new Promise(function(resolve, reject) {
     installedChunkData = installedChunks[chunkId] = [resolve, reject];
   });
-	installedChunkData[2] = promise;
-	// start chunk loading
-	var head = document.getElementsByTagName('head')[0];
-	var script = document.createElement('script');
-	script.type = 'text/javascript';
-	script.charset = 'utf-8';
-	script.async = true;
-	script.timeout = 120000;
-	script.src = __webpack_require__.p + "" + chunkId + "." + {"0":"ae9c5f5f","1":"0ac69acb","2":"20651a9c","3":"0cdc6c84"}[chunkId] + ".js";
-	var timeout = setTimeout(onScriptComplete, 120000);
-	script.onerror = script.onload = onScriptComplete;
-	function onScriptComplete() {
-		// 防止内存泄漏
-		script.onerror = script.onload = null;
-		clearTimeout(timeout);
-		var chunk = installedChunks[chunkId];
-		if(chunk !== 0) {
-			if(chunk) {
-				chunk[1](new Error('Loading chunk ' + chunkId + ' failed.'));
-			}
-			installedChunks[chunkId] = undefined;
-		}
-	};
-	head.appendChild(script);
-	return promise;
+  installedChunkData[2] = promise;
+  // start chunk loading
+  var head = document.getElementsByTagName('head')[0];
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.charset = 'utf-8';
+  script.async = true;
+  script.timeout = 120000;
+  script.src = __webpack_require__.p + "" + chunkId + "." + {"0":"ae9c5f5f","1":"0ac69acb","2":"20651a9c","3":"0cdc6c84"}[chunkId] + ".js";
+  var timeout = setTimeout(onScriptComplete, 120000);
+  script.onerror = script.onload = onScriptComplete;
+  function onScriptComplete() {
+    // 防止内存泄漏
+    script.onerror = script.onload = null;
+    clearTimeout(timeout);
+    var chunk = installedChunks[chunkId];
+    if(chunk !== 0) {
+      if(chunk) {
+        chunk[1](new Error('Loading chunk ' + chunkId + ' failed.'));
+      }
+      installedChunks[chunkId] = undefined;
+    }
+  };
+  head.appendChild(script);
+  return promise;
 };
 ```
 
@@ -558,33 +558,31 @@ module.exports = {
 
 ```javascript
 // dist/pageA.xxxx.js
-webpackJsonp(
-	[0],[
-		function(o, t, e) {
-			'use strict';
-			Object.defineProperty(t, '__esModule', { value: !0 });
-			var n = e(1);
-			e(2), e(3);
-			console.log(n.a);
-		},
-		function(o, t, e) {
-			'use strict';
-			t.a = 'util A';
-		},
-		function(o, t, e) {
-			'use strict';
-			for (;;);
-			console.log('never use');
-		},
-		function(o, t, e) {
-			'use strict';
-			const n = function() {};
-			n.prototype.saySomething = function() {
-					console.log('class C');
-			};
-		}
-	],[0]
-);
+webpackJsonp([0],[
+  function(o, t, e) {
+    'use strict';
+    Object.defineProperty(t, '__esModule', { value: !0 });
+    var n = e(1);
+    e(2), e(3);
+    console.log(n.a);
+  },
+  function(o, t, e) {
+    'use strict';
+    t.a = 'util A';
+  },
+	function(o, t, e) {
+    'use strict';
+    for (;;);
+    console.log('never use');
+  },
+  function(o, t, e) {
+    'use strict';
+    const n = function() {};
+    n.prototype.saySomething = function() {
+      console.log('class C');
+    };
+  }
+],[0]);
 ```
 
 引入但是没用的变量，函数都会清除，未执行的代码也会被清除。但是类方法是不会被清除的。因为 webpack 不会区分不了是定义在 classC 的 prototype 还是其它 Array 的 prototype 的，比如 classC 写成下面这样：

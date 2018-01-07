@@ -22,6 +22,7 @@ cd code/xxxx/
 #### | 前端工程化
 
 * [前端代码异常监控实战](https://github.com/happylindz/blog/issues/5)
+* [深入理解 webpack 文件打包机制](https://github.com/happylindz/blog/issues/6)
 
 #### | ES6 
 
