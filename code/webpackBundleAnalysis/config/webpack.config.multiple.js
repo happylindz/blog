@@ -3,7 +3,7 @@ const path = require('path')
 
 module.exports = {
   entry: {
-    pageA: [path.resolve(__dirname, '../src/multiple/pageA.js')],
+    pageA: path.resolve(__dirname, '../src/multiple/pageA.js'),
     pageB: path.resolve(__dirname, '../src/multiple/pageB.js'),
   },
   output: {

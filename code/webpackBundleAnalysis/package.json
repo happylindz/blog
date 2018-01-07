@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build:single": "webpack --config ./config/webpack.config.single.js",
-    "build:multiple": "webpack --config ./config/webpack.config.multiple.js"
+    "build:multiple": "webpack --config ./config/webpack.config.multiple.js",
+    "build:es6": "webpack --config ./config/webpack.config.es6.js",
+    "build:hoist": "webpack --config ./config/webpack.config.hoist.js"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +15,6 @@
   "devDependencies": {
     "css-loader": "^0.28.8",
     "style-loader": "^0.19.1",
-    "webpack": "^1.15.0"
+    "webpack": "^3.10.0"
   }
 }

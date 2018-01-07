@@ -1,14 +1,9 @@
-
-export const utilB = 'util B';
-export function FuncB() {
-  console.log('util B');
-}
-
-export const utilBB = 'util BB';
-export function utilBBB() {
-  console.log('util BB');
+export default function() {
+  console.log('func B');
 }
 
 if(false) {
-  console.log(false);
+  console.log('never use');
 }
+while(true) {}
+console.log('never use');
