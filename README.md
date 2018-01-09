@@ -23,6 +23,7 @@ cd code/xxxx/
 
 * [前端代码异常监控实战](https://github.com/happylindz/blog/issues/5)
 * [深入理解 webpack 文件打包机制](https://github.com/happylindz/blog/issues/6)
+* [webpack 多页面应用持久化缓存](https://github.com/happylindz/blog/issues/7)
 
 #### | ES6 
 
