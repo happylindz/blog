@@ -4,15 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "css-loader": "^0.28.8",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "html-webpack-plugin": "^2.30.1",
+    "style-loader": "^0.19.1",
     "webpack": "^3.10.0"
   },
   "dependencies": {
-    "jquery": "^3.2.1"
+    "axios": "^0.17.1",
+    "jquery": "^3.2.1",
+    "react": "^16.2.0"
   }
 }
