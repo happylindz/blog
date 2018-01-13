@@ -52,7 +52,7 @@ hash 文件名是实现持久化缓存的第一步，目前 webpack 有两种计
 
 ```javascript
 module.exports = {
-  entry: __dirname + '/src/index.js,
+  entry: __dirname + '/src/index.js',
   output: {
     path: __dirname + '/dist',
     filename: '[name].[chunkhash:8].js',
@@ -164,7 +164,7 @@ module.exports = {
 }
 ```
 
-第一个 CommonsChunkPlugin 用于抽离公共模块，相当于是说 webpack 大佬，如果你看到某个模块被加载两次即以上，那么请你帮我移到 common chunk 里面，这里 minCHunks 为 2，粒度拆解最细，你可以根据自己的实际情况，看选择是用多少次模块才将它们抽离。
+第一个 CommonsChunkPlugin 用于抽离公共模块，相当于是说 webpack 大佬，如果你看到某个模块被加载两次即以上，那么请你帮我移到 common chunk 里面，这里 minChunks 为 2，粒度拆解最细，你可以根据自己的实际情况，看选择是用多少次模块才将它们抽离。
 
 第二个 CommonsChunkPlugin 用来提取第三方代码，将它们进行抽离，判断资源是否来自 node_modules，如果是，则说明是第三方模块，那就将它们抽离。相当于是告诉 webpack 大佬，如果你看见某些模块是来自 node_modules 目录的，并且名字是 .js 结尾的话，麻烦把他们都移到 vendor chunk 里去，如果 vendor chunk 不存在的话，就创建一个新的。
 
