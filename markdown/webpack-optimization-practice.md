@@ -1,3 +1,5 @@
+[原文地址](https://github.com/happylindz/blog/issues/8)
+
 # webpack 大型应用优化实践
 
 ## 前言
