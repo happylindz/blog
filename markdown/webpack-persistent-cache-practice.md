@@ -8,7 +8,7 @@
 
 1. 什么是持久化缓存，为什么做持久化缓存?
 2. webpack 如何做持久化缓存？
-3. webpack 做缓存的一些注意点
+3. webpack 做缓存的一些注意点。
 
 ## 持久化缓存
 
@@ -247,7 +247,7 @@ module.exports = {
 
 那么这部分代码最终放在哪个文件呢？因为我们刚才配置的时候最后生成的 common chunk 模块，那么这部分运行时代码会被直接内置在里面，这就导致了，我们每次更新我们业务代码(pageA, pageB, 模块)的时候， common chunkhash 会一直变化，但是这显然不符合我们的设想，因为我们只是要用 common chunk 用来存放公共模块(这里指的是 componentA)，那么我 componentA 都没去修改，凭啥 chunkhash 需要变了。
 
-所以我们需要将这部分 runtime 代码抽离成单独文件.
+所以我们需要将这部分 runtime 代码抽离成单独文件。
 
 ```javascript
 module.exports = {
