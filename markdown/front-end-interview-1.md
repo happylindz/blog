@@ -1,4 +1,4 @@
-[原文地址]()
+[原文地址](https://github.com/happylindz/blog/issues/9)
 
 # 常见前端面试题总结 (一)
 
@@ -8,11 +8,11 @@
 
 盒子的高宽是由盒子的内容区仅由 width, height 决定的，不包含边框，内外边距。
 
-![](/Users/lindongzhou/Desktop/test/1.jpg)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/font-end-interview/1.jpg)
 
 * IE 盒模型：
 
-![](/Users/lindongzhou/Desktop/test/2.jpg)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/font-end-interview/2.jpg)
 
 在 IE 盒模型中，盒子宽高不仅包含了元素的宽高，而且包含了元素的边框以及内边距。
 
