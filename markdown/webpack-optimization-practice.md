@@ -1,3 +1,5 @@
+[原文地址](https://github.com/happylindz/blog/issues/8)
+
 # webpack 大型应用优化实践
 
 ## 前言
@@ -311,7 +313,7 @@ export default Index;
 
 它相当于是在输出 css 文件的时候做了一层原名称到新名称的一次转化来保证 css 模块化的特性，输出的值就像这样：
 
-```json
+```
 Object {
   recursive: 'recursive__abc53xxxx',
   xxxxx: 'xxxxx__def884xxx',
@@ -449,7 +451,7 @@ module.exports = {
 * 每个文件的尺寸在总体中的占比，一眼看出哪些文件尺寸大
 * 模块之间的包含关系
 
-![](../image/webpack-optimization/1.gif)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/webpack-optimization/1.gif)
 
 
 ## 结语
