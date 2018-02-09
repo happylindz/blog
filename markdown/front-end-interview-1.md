@@ -192,7 +192,7 @@ Object.prototype.toStrong.call() 是检测数据类型最准确最常用的方�
 
 ```javascript
 function toString(data) {
-	return Object.prototype.toString.call(data).slice(8, -1);
+  return Object.prototype.toString.call(data).slice(8, -1);
 }
 
 console.log(toString('abc') === 'String'); 
@@ -256,7 +256,7 @@ console.log(typeof (Array));  // function
 ```javascript
 function Person() {
   if(this instanceof arguments.callee) {
-	  console.log('new 调用');
+    console.log('new 调用');
   }else {
     console.log('普通调用');
   }
