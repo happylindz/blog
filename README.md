@@ -29,6 +29,7 @@ cd code/xxxx/
 #### | ES6 
 
 * [你可能不知道的 Promise 对象](https://github.com/happylindz/blog/issues/1)
+* [深入理解 ES6 模块机制](https://github.com/happylindz/blog/issues/10)
 
 #### | 前端基础知识
 
