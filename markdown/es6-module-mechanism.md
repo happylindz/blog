@@ -21,7 +21,7 @@ ES6 模块跟 CommonJS 模块的不同，主要有以下两个方面：
 
 ### CommonJS 输出值的拷贝
 
-首先第一点，在 CommonJS 模块中，如果你 ```require``` 了一个模块，那就相当于你执行了该文件的代码并最终获取到模块输出的 ```module.exports``` 对象的一份拷贝。
+CommonJS 模块输出的是值的拷贝，也就是说，一旦输出一个值，模块内部的变化就影响不到这个值。
 
 ```javascript
 // a.js
@@ -47,7 +47,7 @@ module.exports = {
 // 1
 ```
 
-从上述代码可以看出，你获取的只是模块输出对象的一个拷贝， b 中的 foo 已经和 a 中的 foo 已经不相干了，所以如果你想要在 CommonJS 中动态获取模块中的值，那么就需要借助于函数延时执行的特性。
+上面代码说明，b 模块加载以后，它的内部 foo 变化就影响不到输出的 exports.foo 了。这是因为 foo 是一个原始类型的值，会被缓存。所以如果你想要在 CommonJS 中动态获取模块中的值，那么就需要借助于函数延时执行的特性。
 
 ```javascript
 // a.js
@@ -59,7 +59,7 @@ setTimeout(() => {
 }, 1000);
 
 // b.js
-let foo = 1;
+var foo = 1;
 setTimeout(() => {
   foo = 2;
 }, 500);
@@ -77,8 +77,34 @@ module.exports = {
 
 所以我们可以总结一下：
 
-1. CommonJS 模块中 require 引入模块的位置不同会对输出结果产生影响，并且会生成值的拷贝
-2. CommonJS 模块重复引入的模块并不会重复执行，再次获取模块只会获得之前获取到的模块的拷贝
+1. CommonJS 模块重复引入的模块并不会重复执行，再次获取模块直接获得暴露的 module.exports 对象
+2. 如果你要处处获取到模块内的最新值的话，也可以你每次更新数据的时候每次都要去更新 module.exports 上的值
+3. 如果你暴露的 module.exports 的属性是个对象，那就不存在这个问题了 
+
+所以如果你要处处获取到模块内的最新值的话，也可以你每次更新数据的时候每次都要去更新 module.exports 上的值，比如：
+
+```javascript
+// a.js
+var b = require('./b');
+console.log(b.foo);
+setTimeout(() => {
+  console.log(b.foo);
+  console.log(require('./b').foo);
+}, 1000);
+
+// b.js
+module.exports.foo = 1;   // 同 exports.foo = 1 
+setTimeout(() => {
+  module.exports.foo = 2;
+}, 500);
+
+// 执行：node a.js
+// 执行结果：
+// 1
+// 2
+// 2
+```
+
 
 ### ES6 输出值的引用
 
@@ -214,7 +240,7 @@ console.log('b done');
 // a done
 ```
 
-结合之前讲的特性很好理解，当你从 b 中想引入 a 模块的时候，因为 node 之前已经加载过 a 模块了，所以它不会再去重复执行 a 模块，而是直接去生成当前 a 模块吐出的 ```module.exports``` 对象一份拷贝，因为 a 模块引入 b 模块先于给 done 重新赋值，所以当前 a 模块中输出的 module.exports 中 done 的值仍为 false。而当 a 模块中输出 b 模块的 done 值的时候 b 模块已经执行完毕，所以 b 模块中的 done 值为 true。
+结合之前讲的特性很好理解，当你从 b 中想引入 a 模块的时候，因为 node 之前已经加载过 a 模块了，所以它不会再去重复执行 a 模块，而是直接去生成当前 a 模块吐出的 ```module.exports``` 对象，因为 a 模块引入 b 模块先于给 done 重新赋值，所以当前 a 模块中输出的 module.exports 中 done 的值仍为 false。而当 a 模块中输出 b 模块的 done 值的时候 b 模块已经执行完毕，所以 b 模块中的 done 值为 true。
 
 从上面的执行过程中，我们可以看到，在 CommonJS 规范中，当遇到 require() 语句时，会执行 require 模块中的代码，并缓存执行的结果，当下次再次加载时不会重复执行，而是直接取缓存的结果。正因为此，出现循环依赖时才不会出现无限循环调用的情况。虽然这种模块加载机制可以避免出现循环依赖时报错的情况，但稍不注意就很可能使得代码并不是像我们想象的那样去执行。因此在写代码时还是需要仔细的规划，以保证循环模块的依赖能正确工作。
 
