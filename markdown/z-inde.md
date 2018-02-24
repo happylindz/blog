@@ -1,6 +1,6 @@
 [原文地址](https://github.com/happylindz/blog/issues/11)
 
-# 重新认识 z-index 
+# 深入理解 CSS 属性 z-index 
 
 ## 前言
 
@@ -173,8 +173,59 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 ### 不同的层叠上下文
 
+这个就比较复杂了，可以总结成一句话：打狗还得看主人，下面让我先画了草图来说明一下：
 
+![](/Users/lindongzhou/blog/images/z-index/11.png)
+
+页面中常见的 DOM 树大概是长这样：**这里 Root、ParentX、ChildX 均为层叠上下文元素，并非一定是 ABCD 的父元素**
+
+1. A 元素想跟 B 或者 ChildB 元素比较，很高兴，它们属于相同层叠上下文(ChildB)下，根据层叠水平去判断就可以了
+2. 如果 A 元素想跟 C 或者 ChildA 比较，那就去找它们共同的祖先层叠上下文(ParentB)，找到之后，就根据祖先层叠上下文下两个元素所在的局部层叠上下文比较层叠水平(这里就是 ChildA 和 ChildB 去比较)
+3. 同理，如果 A 想跟 D 一决雌雄，那么就去找祖先层叠上下文(Root)，然后去比较 ParentA 和 ParentB 的层叠水平即可
+
+是不是很简单，下面再通过两个简单的小示例来说明一下：
+
+示例一：[demo 地址](https://jsfiddle.net/lindz/svnsvpe7/6/)
+
+![](/Users/lindongzhou/blog/images/z-index/12.png)
+
+**虽然 childA 的 z-index: 9999 非常大，但是在跟 parentB 或者 childB 比较的时候，它没资格去比，只能让它的老大 parentA 去比较，parentA 跟 parentB 一比较，才发现：妈呀，原来你的 z-index 为 2 比我还大，失敬失敬，所以 childA 和 parentA 只好乖乖呆在 parentB 底下。**
+
+如果我们将例子稍微改下，让 parentA 不再创建新的层叠上下文元素：[demo 地址](https://jsfiddle.net/lindz/uwhkut63/1/)
+
+![](/Users/lindongzhou/blog/images/z-index/13.png)
+
+当 parentA 不再创建层叠上下文之后，childA 想跟 childB 比较，就不再受限于 parentA，而是直接跟 parentB 直接比较(因为 childA 和 parentB 在同一个层叠上下文)，显然 childA 在最上方，这也就是 childA 覆盖 parentB 的原因。
 
 ## 问题的解决方案
 
+理论知识已经介绍完了，如果你理解了上面的理论，这个问题应该是小菜一碟，下面就来说说一开始问题的解决方案：
+
+因为在每个产品项上添加了 ```transform: translateZ(0)``` 导致每一个产品项都创建了一个层叠上下文，根据前面提到规则，每个产品项里面的 DOM 元素的都是相互独立的，取决于每个产品项(每个局部层叠上下文)，又由于这些产品项的层叠水平一致(与 z-index: auto 相同)，遵循后来居上原则，这才导致了后面的元素会去覆盖前面的元素。举个简单的例子: [demo 地址](https://jsfiddle.net/lindz/y8uoafff/3/)
+
+![](/Users/lindongzhou/blog/images/z-index/14.png)
+
+就像这样，即使你在 child 上添加多大的 z-index 属性都不会改变它的层叠水平，唯一的办法就是改变 item 的 z-index 数值，由于我们覆盖的部分比较特殊，仅仅只是弹框部分，而弹框部分默认是不显示的，只有当鼠标悬浮到入口的时候才会显示，最简单的方式就是，当鼠标 hover 到 item 上的时候，将其 z-index 值变大即可，破坏后来居上的特性: [demo 地址](https://jsfiddle.net/lindz/w6v48ay0/1/)
+
+最终简化效果：
+
+![](/Users/lindongzhou/blog/images/z-index/15.gif)
+
+## 最佳实践
+
+说到这其实可以结束了，我在学习的过程中，看了张鑫旭大佬之前录的视频，他提出了一些最佳实践，我觉得挺不错的，这里也简单地介绍一下：
+
+1. 不犯二准则：对于非浮层元素，避免设置 z-index 值，z-index 值没有任何道理需要超过 2
+2. 对于浮层元素，可以通过 JS 获取 body 下子元素的最大 z-index 值，然后在此基础上加 1 作为浮层元素的 z-index 值
+
+对于非浮层元素，不要过多地去运用 z-index 去调整显示顺序，要灵活地去运用层叠水平和后来居上的准则去让元素获得正确的显示，如果是在要设置 z-index 去调整，不建议非浮层元素 z-index 数值超过 2，对于 DOM 元素，-1, 0, 1, 2 足够让元素有正确的显示顺序。
+
+对于浮层元素，往往是第三方组件开发，当你无法确认你的浮层是否会百分百覆盖在 DOM 树上的时候，你可以去动态获取页面 body 元素下所有子元素 z-index 的最大值，在此基础加一作为浮层元素 z-index 值，用于保证该浮层元素能够显示在最上方。
+
 ## 结尾
+
+最后的最后，本篇深入 z-index 属性已经就完结了，感觉 CSS 属性有许许多多的彩蛋，接下来有时间多接触，多总结，有时间会继续分享出来。
+
+## 参考链接
+
+* [CSS深入理解之z-index](https://www.imooc.com/learn/643)
