@@ -12,7 +12,7 @@
 
 然后给每个产品项添加一个 CSS3 动画，动画效果大概像这样: [demo 地址](https://codepen.io/jasonheecs/pen/GNNwpZ)
 
-实现后的效果大概是这样的(截图有点糊，建议点 Demo 地址查看)：
+实现后的效果大概是这样的(截图有点糊，建议点 demo 地址查看)：
 
 ![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/2.gif)
 
@@ -44,11 +44,15 @@
 
 ## z-index 基础
 
-首先介绍一下 z-index，z-index 属性是用来调整元素及子元素在 z 轴上的顺序，当元素发生覆盖的时候，那个元素在上面，那个元素在下面。通常来说，z-index 值较大的元素会覆盖较低的元素。
+首先介绍一下 z-index，z-index 属性是用来调整元素及子元素在 z 轴上的顺序，当元素发生覆盖的时候，哪个元素在上面，哪个元素在下面。通常来说，z-index 值较大的元素会覆盖较低的元素。
 
 z-index 的默认值为 auto，可以设置正整数，也可以设置为负整数，如果不考虑 CSS3，只有定位元素(position:relative/absolute/fixed)的 z-index 才有作用，如果你的 z-index 作用于一个非定位元素(一些 CSS3 也会生效)，是不起任何作用的。比如: [demo 地址](https://jsfiddle.net/lindz/z945msu2/4/)
 
-当你为 DOM 元素设置了定位后，该元素的 z-index 就会生效，默认为 auto，你可以简单将它等同于 z-index: 0，比如：[demo 地址](https://jsfiddle.net/lindz/f8uwtu13/3/)，**也就是说，z-index 生效的前提条件是必须要设置定位属性(或者一些 CSS3 属性)，才能够生效**
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/16.jpg)
+
+当你为 DOM 元素设置了定位后，该元素的 z-index 就会生效，默认为 auto，你可以简单将它等同于 z-index: 0，比如：[demo 地址](https://jsfiddle.net/lindz/f8uwtu13/4/)，**也就是说，z-index 生效的前提条件是必须要设置定位属性(或者一些 CSS3 属性)，才能够生效**
+
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/17.jpg)
 
 看完 demo 你可能会觉得纳闷，为啥我单单只设置了一个 position 属性，没设置 z-index 值，为啥红色方格会覆盖蓝色方格，这里就涉及到了 z-index 层叠水平的知识。
 
