@@ -8,17 +8,17 @@
 
 事情的经过是这样的(背景有点长)，最近在写下面这样的列表页：
 
-![](/Users/lindongzhou/blog/images/z-index/1.png)
+![](//raw.githubusercontent.com/happylindz/blog/master/images/z-index/1.jpg)
 
 然后给每个产品项添加一个 CSS3 动画，动画效果大概像这样: [Demo 地址](https://codepen.io/jasonheecs/pen/GNNwpZ)
 
 实现后的效果大概是这样的(截图有点糊，建议点 Demo 地址查看)：
 
-![](/Users/lindongzhou/blog/images/z-index/2.gif)
+![](//raw.githubusercontent.com/happylindz/blog/master/images/z-index/2.gif)
 
 在 Chrome 上显示正常，但是从 Safari 打开，就发现不得了了，动画十分卡顿：
 
-![](/Users/lindongzhou/blog/images/z-index/3.gif)
+![](//raw.githubusercontent.com/happylindz/blog/master/images/z-index/3.gif)
 
 在切换不同的产品项的时候会发现页面动画明显卡顿，想到这，其实这难不倒我，于是我就给每个产品项添加 3D 动画硬件加速，方法也十分简单，就像下面这样。
 
@@ -32,7 +32,7 @@
 
 之后打开 Safari 后发现页面动画十分流畅，硬件加速的优化成功，但是随之而来又出现新的问题，也就是本文所说的 DOM 元素层叠问题。
 
-![](/Users/lindongzhou/blog/images/z-index/4.png)
+![](//raw.githubusercontent.com/happylindz/blog/master/images/z-index/4.jpg)
 
 虽然动画效果卡顿修复了，但是页面 DOM 元素层叠却出现问题：也就是下面的产品项会覆盖上面产品项右下角的入口弹框，而我们希望的正常的效果应该是这样：
 
