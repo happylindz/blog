@@ -36,7 +36,7 @@
 
 虽然动画效果卡顿修复了，但是页面 DOM 元素层叠却出现问题：也就是下面的产品项会覆盖上面产品项右下角的入口弹框，而我们希望的正常的效果应该是这样：
 
-![](/Users/lindongzhou/blog/images/z-index/5.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/5.jpg)
 
 遇到这样的问题，第一反应：那我将弹框的 z-index 调大不就好了，小菜一碟，但是无论我怎么调整 z-index 的值，弹框始终被下方的产品项所覆盖，一开始我也百思不得其解。
 
@@ -58,7 +58,7 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 那么层叠水平是什么样的呢？下面就是著名的 7 阶层叠水平(stacking level)
 
-![](/Users/lindongzhou/blog/images/z-index/6.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/6.jpg)
 
 可以看出，层叠水平规范了元素重叠时候的呈现规则，有了这个规则，我们也就不难解释为何之前例子中红色方格会覆盖蓝色方格。**因为当你设置了 position: relative 属性后，元素 z-index:auto 生效导致层叠水平提升，比普通内联元素来的高，所以红色方格会显示在上方。**
 
@@ -68,7 +68,7 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 首先是 inline/inline-block 元素高于浮动元素，[demo 地址](https://jsfiddle.net/moLe6haq/2/)
 
-![](/Users/lindongzhou/blog/images/z-index/7.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/7.jpg)
 
 可以很清晰的看出文字(inline元素)覆盖了图片(浮动元素).
 
@@ -76,7 +76,7 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 [demo 地址](https://jsfiddle.net/e01bc47b/4/)
 
-![](/Users/lindongzhou/blog/images/z-index/8.jpg)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/8.jpg)
 
 红色方格(inline-block)覆盖绿色方格(block)，但是由于文字(display:block)属于 inline 水平，与红色方格(inline-block) 同级，遵循后来居上(接下来会解释)原则，没有被 inline-block 元素覆盖。
 
@@ -157,7 +157,7 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 举个例子：[demo 地址](https://jsfiddle.net/lindz/3uan3vjv/4/)
 
-![](/Users/lindongzhou/blog/images/z-index/9.jpg)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/9.jpg)
 
 .box 元素和其子元素 img 的比较：**因为 img 和 .box 属于相同的层叠上下文中，因为 img z-index 为 -1，所以下沉到父元素的下面，父元素覆盖了图片，但是 img 还是在 body 的背景色之上，**因为遵循 7 阶层叠水平，最底下一定会是层叠上下文(body 元素)的 background 或者 border。
 
@@ -165,7 +165,7 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 [demo 地址](https://jsfiddle.net/lindz/vpynp7y8/7/)
 
-![](/Users/lindongzhou/blog/images/z-index/10.jpg)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/10.jpg)
 
 你会发现：img 元素覆盖了 .box 的背景色，因为层叠上下文的背景色永远是在最低下，层叠上下文由 body 元素变为了 .box 元素，但是如果是 .box 下的 span 元素和 img 元素的比较，inline 元素高于 z-index 为负值的元素，所以 2222 显示在图片之上。
 
@@ -175,7 +175,7 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 这个就比较复杂了，可以总结成一句话：打狗还得看主人，下面让我先画了草图来说明一下：
 
-![](/Users/lindongzhou/blog/images/z-index/11.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/11.png)
 
 页面中常见的 DOM 树大概是长这样：**这里 Root、ParentX、ChildX 均为层叠上下文元素，并非一定是 ABCD 的父元素**
 
@@ -187,13 +187,13 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 示例一：[demo 地址](https://jsfiddle.net/lindz/svnsvpe7/6/)
 
-![](/Users/lindongzhou/blog/images/z-index/12.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/12.jpg)
 
 **虽然 childA 的 z-index: 9999 非常大，但是在跟 parentB 或者 childB 比较的时候，它没资格去比，只能让它的老大 parentA 去比较，parentA 跟 parentB 一比较，才发现：妈呀，原来你的 z-index 为 2 比我还大，失敬失敬，所以 childA 和 parentA 只好乖乖呆在 parentB 底下。**
 
 如果我们将例子稍微改下，让 parentA 不再创建新的层叠上下文元素：[demo 地址](https://jsfiddle.net/lindz/uwhkut63/1/)
 
-![](/Users/lindongzhou/blog/images/z-index/13.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/13.jpg)
 
 当 parentA 不再创建层叠上下文之后，childA 想跟 childB 比较，就不再受限于 parentA，而是直接跟 parentB 直接比较(因为 childA 和 parentB 在同一个层叠上下文)，显然 childA 在最上方，这也就是 childA 覆盖 parentB 的原因。
 
@@ -203,13 +203,13 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 因为在每个产品项上添加了 ```transform: translateZ(0)``` 导致每一个产品项都创建了一个层叠上下文，根据前面提到规则，每个产品项里面的 DOM 元素的都是相互独立的，取决于每个产品项(每个局部层叠上下文)，又由于这些产品项的层叠水平一致(与 z-index: auto 相同)，遵循后来居上原则，这才导致了后面的元素会去覆盖前面的元素。举个简单的例子: [demo 地址](https://jsfiddle.net/lindz/y8uoafff/3/)
 
-![](/Users/lindongzhou/blog/images/z-index/14.png)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/14.jpg)
 
 就像这样，即使你在 child 上添加多大的 z-index 属性都不会改变它的层叠水平，唯一的办法就是改变 item 的 z-index 数值，由于我们覆盖的部分比较特殊，仅仅只是弹框部分，而弹框部分默认是不显示的，只有当鼠标悬浮到入口的时候才会显示，最简单的方式就是，当鼠标 hover 到 item 上的时候，将其 z-index 值变大即可，破坏后来居上的特性: [demo 地址](https://jsfiddle.net/lindz/w6v48ay0/1/)
 
 最终简化效果：
 
-![](/Users/lindongzhou/blog/images/z-index/15.gif)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/15.gif)
 
 ## 最佳实践
 
