@@ -50,9 +50,9 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 ![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/16.jpg)
 
-当你为 DOM 元素设置了定位后，该元素的 z-index 就会生效，默认为 auto，你可以简单将它等同于 z-index: 0，比如：[demo 地址](https://jsfiddle.net/lindz/f8uwtu13/4/)，**也就是说，z-index 生效的前提条件是必须要设置定位属性(或者一些 CSS3 属性)，才能够生效**
+当你为 DOM 元素设置了定位后，该元素的 z-index 就会生效，默认为 auto，你可以简单将它等同于 z-index: 0，比如：[demo 地址](https://jsfiddle.net/lindz/f8uwtu13/6/)，**也就是说，z-index 生效的前提条件是必须要设置定位属性(或者一些 CSS3 属性)，才能够生效**
 
-![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/17.jpg)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/18.jpg)
 
 看完 demo 你可能会觉得纳闷，为啥我单单只设置了一个 position 属性，没设置 z-index 值，为啥红色方格会覆盖蓝色方格，这里就涉及到了 z-index 层叠水平的知识。
 
@@ -70,7 +70,7 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 ### inline/inline-block 元素高于浮动元素
 
-首先是 inline/inline-block 元素高于浮动元素，[demo 地址](https://jsfiddle.net/lindz/moLe6haq/5/)
+首先是 inline/inline-block 元素高于浮动元素，[demo 地址](https://jsfiddle.net/lindz/moLe6haq/7/)
 
 ![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/7.jpg)
 
@@ -165,9 +165,9 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 .box 元素和其子元素 img 的比较：**因为 img 和 .box 属于相同的层叠上下文中，因为 img z-index 为 -1，所以下沉到父元素的下面，父元素覆盖了图片，但是 img 还是在 body 的背景色之上，**因为遵循 7 阶层叠水平，最底下一定会是层叠上下文(body 元素)的 background 或者 border。
 
-但是如果我们让 .box 元素创建局部层叠上下文的时候就不一样了，.box 元素和 img 元素的也是同处于相同层叠上下文，只不过上下文切换为了 .box 创建的局部层叠上下文。
+但是如果我们让 .box 元素创建局部层叠上下文的时候就不一样了，.box 元素和 img 元素的也是同处于相同层叠上下文，只不过上下文切换为 .box 创建的局部层叠上下文。
 
-[demo 地址](https://jsfiddle.net/lindz/vpynp7y8/11/)
+[demo 地址](https://jsfiddle.net/lindz/vpynp7y8/12/)
 
 ![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/10.jpg)
 
@@ -195,7 +195,7 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 **虽然 childA 的 z-index: 9999 非常大，但是在跟 parentB 或者 childB 比较的时候，它没资格去比，只能让它的老大 parentA 去比较，parentA 跟 parentB 一比较，才发现：妈呀，原来你的 z-index 为 2 比我还大，失敬失敬，所以 childA 和 parentA 只好乖乖呆在 parentB 底下。**
 
-如果我们将例子稍微改下，让 parentA 不再创建新的层叠上下文元素：[demo 地址](https://jsfiddle.net/lindz/uwhkut63/1/)
+如果我们将例子稍微改下，让 parentA 不再创建新的层叠上下文元素：[demo 地址](https://jsfiddle.net/lindz/uwhkut63/4/)
 
 ![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/13.jpg)
 
@@ -205,11 +205,11 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 理论知识已经介绍完了，如果你理解了上面的理论，这个问题应该是小菜一碟，下面就来说说一开始问题的解决方案：
 
-因为在每个产品项上添加了 ```transform: translateZ(0)``` 导致每一个产品项都创建了一个层叠上下文，根据前面提到规则，每个产品项里面的 DOM 元素的都是相互独立的，取决于每个产品项(每个局部层叠上下文)，又由于这些产品项的层叠水平一致(与 z-index: auto 相同)，遵循后来居上原则，这才导致了后面的元素会去覆盖前面的元素。举个简单的例子: [demo 地址](https://jsfiddle.net/lindz/y8uoafff/3/)
+因为在每个产品项上添加了 ```transform: translateZ(0)``` 导致每一个产品项都创建了一个层叠上下文，根据前面提到规则，每个产品项里面的 DOM 元素的都是相互独立的，取决于每个产品项(每个局部层叠上下文)，又由于这些产品项的层叠水平一致(与 z-index: auto 相同)，遵循后来居上原则，这才导致了后面的元素会去覆盖前面的元素。举个简单的例子: [demo 地址](https://jsfiddle.net/lindz/y8uoafff/12/)
 
 ![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/14.jpg)
 
-就像这样，即使你在 child 上添加多大的 z-index 属性都不会改变它的层叠水平，唯一的办法就是改变 item 的 z-index 数值，由于我们覆盖的部分比较特殊，仅仅只是弹框部分，而弹框部分默认是不显示的，只有当鼠标悬浮到入口的时候才会显示，最简单的方式就是，当鼠标 hover 到 item 上的时候，将其 z-index 值变大即可，破坏后来居上的特性: [demo 地址](https://jsfiddle.net/lindz/y8uoafff/10/)
+就像这样，即使你在 child 上添加多大的 z-index 属性都不会改变它的层叠水平，唯一的办法就是改变 item 的 z-index 数值，由于我们覆盖的部分比较特殊，仅仅只是弹框部分，而弹框部分默认是不显示的，只有当鼠标悬浮到入口的时候才会显示，最简单的方式就是，当鼠标 hover 到 item 上的时候，将其 z-index 值变大即可，破坏后来居上的特性: [demo 地址](https://jsfiddle.net/lindz/y8uoafff/13/)
 
 最终简化效果：
 
