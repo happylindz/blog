@@ -10,7 +10,7 @@
 
 ![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/1.jpg)
 
-然后给每个产品项添加一个 CSS3 动画，动画效果大概像这样: [Demo 地址](https://codepen.io/jasonheecs/pen/GNNwpZ)
+然后给每个产品项添加一个 CSS3 动画，动画效果大概像这样: [demo 地址](https://codepen.io/jasonheecs/pen/GNNwpZ)
 
 实现后的效果大概是这样的(截图有点糊，建议点 Demo 地址查看)：
 
@@ -46,9 +46,9 @@
 
 首先介绍一下 z-index，z-index 属性是用来调整元素及子元素在 z 轴上的顺序，当元素发生覆盖的时候，那个元素在上面，那个元素在下面。通常来说，z-index 值较大的元素会覆盖较低的元素。
 
-z-index 的默认值为 auto，可以设置正整数，也可以设置为负整数，如果不考虑 CSS3，只有定位元素(position:relative/absolute/fixed)的 z-index 才有作用，如果你的 z-index 作用于一个非定位元素(一些 CSS3 也会生效)，是不起任何作用的。比如: [demo 地址](https://jsfiddle.net/z945msu2/1/)
+z-index 的默认值为 auto，可以设置正整数，也可以设置为负整数，如果不考虑 CSS3，只有定位元素(position:relative/absolute/fixed)的 z-index 才有作用，如果你的 z-index 作用于一个非定位元素(一些 CSS3 也会生效)，是不起任何作用的。比如: [demo 地址](https://jsfiddle.net/lindz/z945msu2/4/)
 
-当你为 DOM 元素设置了定位后，该元素的 z-index 就会生效，默认为 auto，你可以简单将它等同于 z-index: 0，比如：[demo 地址](https://jsfiddle.net/f8uwtu13/)，**也就是说，z-index 生效的前提条件是必须要设置定位属性(或者一些 CSS3 属性)，才能够生效**
+当你为 DOM 元素设置了定位后，该元素的 z-index 就会生效，默认为 auto，你可以简单将它等同于 z-index: 0，比如：[demo 地址](https://jsfiddle.net/lindz/f8uwtu13/3/)，**也就是说，z-index 生效的前提条件是必须要设置定位属性(或者一些 CSS3 属性)，才能够生效**
 
 看完 demo 你可能会觉得纳闷，为啥我单单只设置了一个 position 属性，没设置 z-index 值，为啥红色方格会覆盖蓝色方格，这里就涉及到了 z-index 层叠水平的知识。
 
@@ -66,7 +66,7 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 ### inline/inline-block 元素高于浮动元素
 
-首先是 inline/inline-block 元素高于浮动元素，[demo 地址](https://jsfiddle.net/moLe6haq/2/)
+首先是 inline/inline-block 元素高于浮动元素，[demo 地址](https://jsfiddle.net/lindz/moLe6haq/5/)
 
 ![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/7.jpg)
 
@@ -74,7 +74,7 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 ### inline/inline-block 元素高于 block 元素
 
-[demo 地址](https://jsfiddle.net/e01bc47b/4/)
+[demo 地址](https://jsfiddle.net/lindz/e01bc47b/8/)
 
 ![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/8.jpg)
 
@@ -163,7 +163,7 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 但是如果我们让 .box 元素创建局部层叠上下文的时候就不一样了，.box 元素和 img 元素的也是同处于相同层叠上下文，只不过上下文切换为了 .box 创建的局部层叠上下文。
 
-[demo 地址](https://jsfiddle.net/lindz/vpynp7y8/7/)
+[demo 地址](https://jsfiddle.net/lindz/vpynp7y8/11/)
 
 ![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/10.jpg)
 
@@ -205,7 +205,7 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 ![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/14.jpg)
 
-就像这样，即使你在 child 上添加多大的 z-index 属性都不会改变它的层叠水平，唯一的办法就是改变 item 的 z-index 数值，由于我们覆盖的部分比较特殊，仅仅只是弹框部分，而弹框部分默认是不显示的，只有当鼠标悬浮到入口的时候才会显示，最简单的方式就是，当鼠标 hover 到 item 上的时候，将其 z-index 值变大即可，破坏后来居上的特性: [demo 地址](https://jsfiddle.net/lindz/w6v48ay0/1/)
+就像这样，即使你在 child 上添加多大的 z-index 属性都不会改变它的层叠水平，唯一的办法就是改变 item 的 z-index 数值，由于我们覆盖的部分比较特殊，仅仅只是弹框部分，而弹框部分默认是不显示的，只有当鼠标悬浮到入口的时候才会显示，最简单的方式就是，当鼠标 hover 到 item 上的时候，将其 z-index 值变大即可，破坏后来居上的特性: [demo 地址](https://jsfiddle.net/lindz/y8uoafff/10/)
 
 最终简化效果：
 
