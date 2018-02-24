@@ -93,7 +93,7 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 #### 后来居上的原则
 
-后来居上准则就是说，当元素层叠水平相同的时候后面的 DOM 会覆盖前面的 DOM 元素。这个很好理解，不过多解释了。这也就是我们经常会看到为什么后面的元素会覆盖前面的元素。**正如前面看到的那个例子，由于文字(display:block)属于 inline 水平，与红色方格(inline-block) 同级，遵循后来居上(接下来会解释)原则，没有被 inline-block 元素覆盖。**这里我就不另外贴例子来说明了。
+后来居上准则就是说，当元素层叠水平相同的时候后面的 DOM 会覆盖前面的 DOM 元素。这个很好理解，不过多解释了。这也就是我们经常会看到为什么后面的元素会覆盖前面的元素。正如前面看到的那个例子，由于文字(display:block)属于 inline 水平，与红色方格(inline-block) 同级，遵循后来居上(接下来会解释)原则，没有被 inline-block 元素覆盖，这里我就不另外贴例子来说明了。
 
 #### 谁 z-index 大，谁在上
 
@@ -135,11 +135,11 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 1. 元素的透明度 opacity 小于1
 2. 元素的 mix-blend-mode 值不是 normal
 3. 元素的以下属性的值不是 none：
-  * transform
-  * filter
-  * perspective
-  * clip-path
-  * mask / mask-image / mask-border
+	* transform
+	* filter
+	* perspective
+	* clip-path
+	* mask / mask-image / mask-border
 4. 元素的 isolution 属性值为 isolate
 5. 元素的 -webkit-overflow-scrolling 属性为 touch
 6. 元素的 will-change 属性具备会创建层叠上下文的值
@@ -163,7 +163,7 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 ![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/9.jpg)
 
-.box 元素和其子元素 img 的比较：**因为 img 和 .box 属于相同的层叠上下文中，因为 img z-index 为 -1，所以下沉到父元素的下面，父元素覆盖了图片，但是 img 还是在 body 的背景色之上，**因为遵循 7 阶层叠水平，最底下一定会是层叠上下文(body 元素)的 background 或者 border。
+.box 元素和其子元素 img 的比较：因为 img 和 .box 属于相同的层叠上下文中，因为 img z-index 为 -1，所以下沉到父元素的下面，父元素覆盖了图片，但是 img 还是在 body 的背景色之上，因为遵循 7 阶层叠水平，最底下一定会是层叠上下文(body 元素)的 background 或者 border。
 
 但是如果我们让 .box 元素创建局部层叠上下文的时候就不一样了，.box 元素和 img 元素的也是同处于相同层叠上下文，只不过上下文切换为 .box 创建的局部层叠上下文。
 
