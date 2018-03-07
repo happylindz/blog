@@ -1,6 +1,6 @@
 [原文地址](https://github.com/happylindz/blog/issues/11)
 
-# 深入理解 CSS 属性 z-index 
+# 深入理解 CSS 属性 z-index
 
 ## 前言
 
@@ -50,7 +50,7 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 
 ![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/16.jpg)
 
-当你为 DOM 元素设置了定位后，该元素的 z-index 就会生效，默认为 auto，你可以简单将它等同于 z-index: 0，比如：[demo 地址](https://jsfiddle.net/lindz/f8uwtu13/6/)，**也就是说，z-index 生效的前提条件是必须要设置定位属性(或者一些 CSS3 属性)，才能够生效**
+当你为 DOM 元素设置了定位后，该元素的 z-index 就会生效，默认为 auto，你可以简单将它等同于 z-index: 0，比如：[demo 地址](https://jsfiddle.net/lindz/f8uwtu13/6/)，**也就是说，z-index 生效的前提条件是必须要设置定位属性(或者一些 CSS3 属性)，才能够生效。**
 
 ![](https://raw.githubusercontent.com/happylindz/blog/master/images/z-index/18.jpg)
 
@@ -151,7 +151,7 @@ z-index 的默认值为 auto，可以设置正整数，也可以设置为负整�
 接下来就来总结一下如何比较两个 DOM 元素的显示顺序呢？
 
 1. 如果是在相同的层叠上下文，按照层叠水平的规则来显示元素
-2. **如果是在不同的层叠上下文中，先找到共同的祖先层叠上下文，然后比较共同层叠上下文下这个两个元素所在的局部层叠上下文的层叠水平，**
+2. **如果是在不同的层叠上下文中，先找到共同的祖先层叠上下文，然后比较共同层叠上下文下这个两个元素所在的局部层叠上下文的层叠水平。**
 
 千言万语浓缩于这两句话中，但是里面注意的点有很多，我们先来看第一点：
 
