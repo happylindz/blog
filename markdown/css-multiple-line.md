@@ -60,7 +60,7 @@ div {
 
 实现效果：[demo 地址](https://jsfiddle.net/lindz/eodpygu9/7/)
 
-![](https://raw.githubusercontent.com/happylindz/blog/master/images/jiequ/3.gif)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jiequ/9.gif)
 
 从效果上来看，它的优点有：
 
