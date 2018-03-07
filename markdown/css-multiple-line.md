@@ -6,7 +6,7 @@
 
 最近在做响应式系统设计的时候遇到需要对标题进行多行文字截取的效果，如下图：
 
-![](/Users/lindongzhou/blog/images/jiequ/1.jpg)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jiequ/1.jpg)
 
 看似十分简单的标题截断效果，但是竟然没有一个统一 CSS 属性实现标准，需要用到一些奇淫妙计来实现，一般来说，在做这样文字截断效果时我们更多是希望：
 
@@ -31,7 +31,7 @@ div {
 
 实现效果：[demo 地址](https://jsfiddle.net/lindz/0yap1p2b/1/)
 
-![](/Users/lindongzhou/blog/images/jiequ/2.gif)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jiequ/2.gif)
 
 属性浏览器原生支持，各大浏览器兼容性好，缺点就是只支持单行文本截断，并不支持多行文本截取。
 
@@ -60,7 +60,7 @@ div {
 
 实现效果：[demo 地址](https://jsfiddle.net/lindz/eodpygu9/7/)
 
-![](/Users/lindongzhou/blog/images/jiequ/3.gif)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jiequ/3.gif)
 
 从效果上来看，它的优点有：
 
@@ -104,7 +104,7 @@ p::after {
 
 实现效果：[demo 地址](https://jsfiddle.net/lindz/6aqnye4u/2/)
 
-![](/Users/lindongzhou/blog/images/jiequ/4.gif)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jiequ/4.gif)
 
 从实现效果来看，它所具备的优点：
 
@@ -113,7 +113,7 @@ p::after {
 
 但是它无法识别文字的长短，即文本超出范围才显示省略号，否则不显示省略号。还有因为是我们人为地在文字末尾添加一个省略号效果，就会导致它跟文字其实没有贴合的很紧密，遇到这种情况可以通过添加 ```word-break: break-all;``` 使一个单词能够在换行时进行拆分。
 
-![](/Users/lindongzhou/blog/images/jiequ/5.gif)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jiequ/5.gif)
 
 适合场景：文字内容较多，确定文字内容一定会超过容器的，那么选择这种方式不错。
 
@@ -125,7 +125,7 @@ p::after {
 
 基本原理：
 
-![](/Users/lindongzhou/blog/images/jiequ/6.jpg)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jiequ/6.jpg)
 
 有个三个盒子 div，粉色盒子左浮动，浅蓝色盒子和黄色盒子右浮动，
 
@@ -134,7 +134,7 @@ p::after {
 
 好了，这样两种状态的两种展示形式已经区分开了，那么我们可以将黄色盒子进行相对定位，将内容溢出的黄色盒子移动到文本内容右下角，而未溢出的则会被移到外太空去了，只要我们使用 ```overflow: hidden``` 就可以隐藏掉。
 
-![](/Users/lindongzhou/blog/images/jiequ/7.jpg)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jiequ/7.jpg)
 
 基本原理就是这样，我们可以将浅蓝色区域想象成标题，黄色区域想象为省略号效果。那么你可能会觉得粉色盒子占了空间，那岂不是标题会整体延后了吗，这里可以通过 ```margin``` 的负值来出来，设置浅蓝色盒子的 ```margin-left``` 的负值与粉色盒子的宽度相同，标题也能正常显示。
 
@@ -185,7 +185,7 @@ p::after {
 
 实现效果：[demo 地址](https://jsfiddle.net/lindz/95h0edp6/35/)
 
-![](/Users/lindongzhou/blog/images/jiequ/8.gif)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/jiequ/8.gif)
 
 这里我目前看到最巧妙的方式了。只需要支持 CSS 2.1 的特性就可以了，它的优点有：
 
