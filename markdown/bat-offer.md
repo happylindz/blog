@@ -77,7 +77,7 @@
 
 我看很多人写的简历，发现他们写的都很啰嗦，让人一眼看过去抓不住重点，我建议最好把简历精简一下，控制在 1-2 页，写的经历和项目跟你应聘的岗位有强相关，无关的经历就不要写了，写了反而显得啰嗦。像我百用不烂的的模板就像下图这样：
 
-![](https://raw.githubusercontent.com/happylindz/blog/master/images/bat-offer/1.png）
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/bat-offer/1.png)
 
 另外还有三点需要注意：
 
@@ -102,7 +102,7 @@
 
 每个岗位都有自己不同的知识体系，在其它领域我也不是专业的，就不班门弄斧了，我就拿前端工程师角度来看，作为一名应届前端工程师，至少要对整体知识体系有自己的理解(如果不是从事前端开发的可以跳过)：
 
-![](https://raw.githubusercontent.com/happylindz/blog/master/images/bat-offer/2.png）
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/bat-offer/2.png)
 
 每个岗位都有对应的知识体系，我这里提供一个思路，不管是你在准备面试还是平时技术积累，通过对自己领域的知识梳理，对自己不熟悉的知识进行查缺补漏。
 
