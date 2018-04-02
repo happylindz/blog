@@ -35,7 +35,9 @@ cd code/xxxx/
 
 * [跨域，你需要知道的全在这里](https://github.com/happylindz/blog/issues/3)
 * [常见前端面试题总结 (一)](https://github.com/happylindz/blog/issues/9)
+* [让 BAT Offer 不再难拿](https://github.com/happylindz/blog/issues/13)
 
 #### | CSS 基础
 
 * [深入理解 CSS 属性 z-index](https://github.com/happylindz/blog/issues/11)
+* [纯 CSS 实现多行文字截断](https://github.com/happylindz/blog/issues/12)
