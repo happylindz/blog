@@ -18,15 +18,15 @@ yarn start
 
 > view -> actionCreator -> action -> reducer -> newState ->(map) container component
 
-但是真是业务开发我们需要处理异步请求，比如：请求后台数据，延迟执行某个效果，setTimout, setInterval 等等，所以当 Redux 遇到异步操作的时候，又该如何处理呢？
+但是真实业务开发我们需要处理异步请求，比如：请求后台数据，延迟执行某个效果，setTimout, setInterval 等等，所以当 Redux 遇到异步操作的时候，又该如何处理呢？
 
 首先我们围绕一个简单的例子展开，然后通过各种方式将它实现出来，基本效果如下：
 
-![](../images/asynchronousAction/1.gif)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/asynchronousAction/1.gif)
 
 ## 不使用中间件处理异步
 
-这里我使用的是 CNode 官网的 API，用来获取首页的文章标题，并将他们全部展示出来，并且右边有个 X 按钮，点击 X 按钮可以将该标题删除。异步请求我们使用封装好的 axios 库，你可以这样发起异步请求：
+这里我使用的是 CNode 官网的 API，获取首页的文章标题，并将他们全部展示出来，并且右边有个 X 按钮，点击 X 按钮可以将该标题删除。异步请求我们使用封装好的 axios 库，你可以这样发起异步请求：
 
 ```javascript
 const response = await axios.get('/api/v1/topics')
@@ -334,7 +334,7 @@ export default createStore(reducer, initValue, applyMiddleware(reduxPromise))
 
 效果:没有 Loading 这个中间状态
 
-![](../images/asynchronousAction/2.gif)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/asynchronousAction/2.gif)
 
 但是如果使用 redux-promise 的话相当于是延后执行了 action，等获取到结果之后再重新 dispatch action。这么写其实有个问题，就是无法发起 FETCH_START action，因为actionCreator 中没有 dispatch 这个字段，redux-promise 虽然赋予了 action 延后执行的能力，但是没有能力发起多 action 请求。
 
@@ -509,7 +509,7 @@ sagaMiddleware.run(mySaga)
 
 我们要做的例子效果如下：
 
-![](../images/asynchronousAction/3.gif)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/asynchronousAction/3.gif)
 
 1. 有两个按钮用来模拟异步请求，分别在 5s 和 1s 内响应数据，我们需要保证按钮点击的顺序性，即当 5s 后数据返回时不会覆盖掉最新数值 1000，保证页面上显示的数据永远是最后一次点击获取到的数据。
 2. 防抖处理，在 1000ms 内再次点击按钮不会进行响应。
@@ -621,7 +621,7 @@ take 监听 INITIAL 类型的 action，首先判断之前有没有任务未执�
 
 最后我们再通过一个例子来对比 thunk 和 saga 在书写上的差异，例子效果如下：
 
-![](../images/asynchronousAction/4.gif)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/asynchronousAction/4.gif)
 
 点击按钮可以每秒增加 1，可以再次点击进行取消增加计数器，也可以通过 5s 后自动取消增加计数器。
 
@@ -750,15 +750,3 @@ export default function* watchIncrementAsync() {
 ```
 
 关于 Redux 异步控制就讲到这里，希望大家有所收获！
-
-
-
-
-
-
-
-
-
-
-
-

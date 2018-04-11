@@ -26,7 +26,7 @@ yarn
 
 简单来说，只有当协议，域名，端口号相同的时候才算是同一个域名，否则，均认为需要做跨域处理。
 
-![](../images/crossOrigin/1.jpg)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/crossOrigin/1.jpg)
 
 ## 跨域方法
 
@@ -74,9 +74,9 @@ console.log('启动服务，监听 127.0.0.1:3000');
 ```html
 // jsonp/index.html
 <script>
-	function jsonpCallback(data) {
-		alert('获得 X 数据:' + data.x);
-	}
+    function jsonpCallback(data) {
+        alert('获得 X 数据:' + data.x);
+    }
 </script>
 <script src="http://127.0.0.1:3000?callback=jsonpCallback"></script>
 ```
@@ -108,7 +108,7 @@ yarn jsonp
 
 打开浏览器访问 ```localhost:8080``` 即可看到获取到的数据。
 
-![](../images/crossOrigin/2.jpg)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/crossOrigin/2.jpg)
 
 至此，通过 JSONP 跨域获取数据已经成功了，但是通过这种方式也存在着一定的优缺点：
 
@@ -169,7 +169,7 @@ console.log('启动服务，监听 127.0.0.1:3000');
 
 然后我们执行命令：```yarn cors``` 打开浏览器访问 ```localhost:3000``` 即可看到效果：
 
-![](../images/crossOrigin/3.jpg)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/crossOrigin/3.jpg)
 
 成功的关键在于 Access-Control-Allow-Origin 是否包含请求页面的域名，如果不包含的话，浏览器将认为这是一次失败的异步请求，将会调用 xhr.onerror 中的函数。
 
@@ -222,7 +222,7 @@ console.log('启动服务，监听 127.0.0.1:3000');
 
 启动服务 ```yarn proxy``` 并访问 ```http://localhost:3000/topics``` 即可看到效果：
 
-![](../images/crossOrigin/4.jpg)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/crossOrigin/4.jpg)
 
 跨域请求成功。纯粹的获取跨域获取后端数据的请求的方式已经介绍完了，另外介绍四种通过 iframe 跨域与其它页面通信的方式。
 
@@ -291,7 +291,7 @@ data.html 收到消息后通过 parent.location.hash 值来修改 index.html 的
 
 之后启动服务 ```yarn hash```，即可在 ```localhost:8080``` 下观察到：
 
-![](../images/crossOrigin/5.jpg)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/crossOrigin/5.jpg)
 
 当然这种方法存在着诸多的缺点：
 
@@ -346,11 +346,11 @@ window.location = "http://www.baidu.com"
 
 但是由于 index.html 页面与该页面 iframe 的 src 如果不同源的话，则无法操作 iframe 里的任何东西，所以就取不到 iframe 的 name 值，所以我们需要在 data.html 加载完后重新换个 src 去指向一个同源的 html 文件，或者设置成 'about:blank;' 都行，这时候我只要在 index.html 相同目录下新建一个 proxy.html 的空页面即可。如果不重新指向 src 的话直接获取的 window.name 的话会报错：
 
-![](../images/crossOrigin/6.jpg)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/crossOrigin/6.jpg)
 
 之后运行 ```yarn name``` 即可看到效果：
 
-![](../images/crossOrigin/7.jpg)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/crossOrigin/7.jpg)
 
 ## 6.postMessage
 
@@ -392,7 +392,7 @@ postMessage 是 HTML5 新增加的一项功能，跨文档消息传输(Cross Doc
 
 启动服务：```yarn postMessage``` 并打开浏览器访问：
 
-![](../images/crossOrigin/8.jpg)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/crossOrigin/8.jpg)
 
 对 postMessage 感兴趣的详细内容可以看看教程：
 
@@ -469,11 +469,10 @@ http {
 
 启动服务 ```yarn domain``` 访问浏览器即可看到效果：
 
-![](../images/crossOrigin/9.jpg)
+![](https://raw.githubusercontent.com/happylindz/blog/master/images/crossOrigin/9.jpg)
 
 ## 总结：
 
 前面七种跨域方式我已经全部讲完，其实讲道理，常用的也就是前三种方式，后面四种更多时候是一些小技巧，虽然在工作中不一定会用到，但是如果你在面试过程中能够提到这些跨域的技巧，无疑在面试官的心中是一个加分项。
 
 上面阐述方法的时候可能有些讲的不明白，希望在阅读的过程中建议你跟着我敲代码，当你打开浏览器看到结果的时候，你也就能掌握到这种方法。
-
