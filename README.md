@@ -26,6 +26,7 @@ cd code/xxxx/
 * [深入理解 webpack 文件打包机制](https://github.com/happylindz/blog/issues/6)
 * [webpack 持久化缓存实践](https://github.com/happylindz/blog/issues/7)
 * [webpack 大型应用优化实践](https://github.com/happylindz/blog/issues/8)
+* [深入浅出 sideEffects](https://github.com/happylindz/blog/issues/15)
 
 #### | ES6 
 
