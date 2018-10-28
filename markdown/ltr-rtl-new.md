@@ -1,3 +1,5 @@
+# 国际化 - 通用 LTR/RTL 布局解决方案
+
 [原文地址](https://github.com/happylindz/blog/issues/16)
 
 在英文或者中文的网站，我们习惯的阅读方式都是从左往右的，所以你在访问国内外的网站的时候会发现，不管是文字还是布局，都是从左往右进行排版，而我们也熟悉和适应了这种阅读习惯，但是在中东地区，有很多国家，诸如像阿拉伯语、希伯来语，他们的阅读习惯却是从右到左的，恰好跟我们是相反的，我也查阅了大量阿拉伯语的网站的设计，感兴趣也可以点击下面的网站看看：
@@ -57,10 +59,18 @@
 
 我也对一些常用的布局方式进行测试：
 
-1. flex 布局：https://jsfiddle.net/0srfqgnp/1/
-2. inline-block 布局：https://jsfiddle.net/t7kn9dap/
-3. float 布局：https://jsfiddle.net/y0tdv7hn/
-4. 绝对定位布局：https://jsfiddle.net/yopreL9z/
+(1) flex 布局：
+<iframe width="100%" height="300" src="//jsfiddle.net/0srfqgnp/1/embedded/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+
+(2) inline-block 布局：
+
+<iframe width="100%" height="300" src="//jsfiddle.net/t7kn9dap/embedded/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+
+(3) float 布局:
+<iframe width="100%" height="300" src="//jsfiddle.net/y0tdv7hn/embedded/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+
+(4) 绝对定位布局：
+<iframe width="100%" height="300" src="//jsfiddle.net/yopreL9z/embedded/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
 
 通过上述的测试可以发现 direction 只能改变 display: flex/inline-block 元素的书写方向，对于 float/绝对定位布局就无能为力，更别谈复杂的页面布局，比如 BFC 布局、双飞翼、圣杯布局等等。
 

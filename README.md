@@ -43,4 +43,4 @@ cd code/xxxx/
 
 * [深入理解 CSS 属性 z-index](https://github.com/happylindz/blog/issues/11)
 * [纯 CSS 实现多行文字截断](https://github.com/happylindz/blog/issues/12)
-
+* [国际化 - 通用 LTR/RTL 布局解决方案](https://github.com/happylindz/blog/issues/16)
