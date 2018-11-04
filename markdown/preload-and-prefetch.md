@@ -139,7 +139,7 @@ const preloadSupported = () => {
 2. 不足之处在于：defer 只作用于脚本文件，对于样式、图片等资源就无能为力了，并且 defer 加载的资源是要执行的，而 preload 只下载资源并不执行，待真正使用到才会执行文件。
 3. 对于页面上主/首屏脚本，可以直接使用 defer 加载，而对于非首屏脚本/其它资源，可以采用 preload/prefeth 来进行加载。
 
-### HTTP/2 Server Push
+### HTTP/2 Server Push:
 
 **HTTP/2 PUSH 功能可以让服务器在没有相应的请求情况下预先将资源推送到客户端。这个跟 preload/prefetch 预加载资源的思路类似，将下载和资源实际执行分离的方法**，当脚本真正想要请求文件的时候，发现脚本就存在缓存中，就不需要去请求网络了。
 
@@ -155,7 +155,7 @@ const preloadSupported = () => {
 
 对于 Server Push 来说，如果服务端渲染 HTML 时间过长的话则很有效，因为这时候浏览器除了干等着，做不了其它操作，但是不好的地方是服务器需要支持 HTTP/2 协议并且服务端压力也会相应增大。对于更多 Server Push 和 preload 的对比可以参考这篇文章：[HTTP/2 PUSH(推送)与HTTP Preload(预加载)大比拼](https://www.zcfy.cc/article/http-2-push-vs-http-preload-dexecure-4722.html?t=new)
 
-### 浏览器预解析
+### 浏览器预解析:
 
 现代浏览器很聪明，就如 Chrome 浏览器，它会在解析 HTML 时收集外链，并在后台并行下载，它也实现了提前加载以及加载和执行分离。
 
