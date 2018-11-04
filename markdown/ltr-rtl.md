@@ -37,7 +37,7 @@
     }
 </style>
 <div style="direction: rtl;">1 2 3 4 5 6</div>
-<div style="text-align:left;">1 2 3 4 5 6</div>
+<div style="text-align:left;direction:rtl;">1 2 3 4 5 6</div>
 <div style="text-align:right;">1 2 3 4 5 6</div>
 <div style="direction: rtl;"><span>This is </span><span>my blog</span></div>
 <div style="direction: rtl;">这是我的博客。</div>
@@ -57,10 +57,18 @@
 
 我也对一些常用的布局方式进行测试：
 
-1. flex 布局：https://jsfiddle.net/0srfqgnp/1/
-2. inline-block 布局：https://jsfiddle.net/t7kn9dap/
-3. float 布局：https://jsfiddle.net/y0tdv7hn/
-4. 绝对定位布局：https://jsfiddle.net/yopreL9z/
+(1) flex 布局：
+<iframe width="100%" height="300" src="//jsfiddle.net/0srfqgnp/1/embedded/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+
+(2) inline-block 布局：
+
+<iframe width="100%" height="300" src="//jsfiddle.net/t7kn9dap/embedded/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+
+(3) float 布局:
+<iframe width="100%" height="300" src="//jsfiddle.net/y0tdv7hn/embedded/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+
+(4) 绝对定位布局：
+<iframe width="100%" height="300" src="//jsfiddle.net/yopreL9z/embedded/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
 
 通过上述的测试可以发现 direction 只能改变 display: flex/inline-block 元素的书写方向，对于 float/绝对定位布局就无能为力，更别谈复杂的页面布局，比如 BFC 布局、双飞翼、圣杯布局等等。
 
@@ -245,7 +253,9 @@ html[lang="ar"] .no-flip-over {
 
 第一，**它需要对我们已有的业务场景进行改造，入侵业务代码**，也就是说，如果你的场景相对比较分散，公用模块复用率较低，那么在使用 transform 方案的时候就需要对每个场景单独进行修改适配，当然如果你的场景公用组件多，对公共模块修改可以很好在各个场景中复用，这样一次性的成本就相对比较容易。
 
-第二点，对于一些页面滚动组件需要做额外的兼容操作，经过我的实践发现，滚动组件在经过翻转之后存在着一些问题，初步认为是因为翻转之后带来一些高度属性值的变化，具体原因需要等兼容适配时候才清楚。
+第二点，**对于一些页面滚动组件需要做额外的兼容操作**，经过我的实践发现，滚动组件在经过翻转之后存在着一些问题，初步认为是因为翻转之后带来一些高度属性值的变化，具体原因需要等兼容适配时候才清楚。
+
+最后一点，**需要考虑到 direction 和 transform 方案对性能带来的影响**，哪一种渲染成本较高，会对复杂页面造成卡顿等等因素都是需要去考虑的。
 
 ## 总结
 
