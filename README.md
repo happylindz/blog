@@ -13,12 +13,16 @@ git clone https://github.com/happylindz/blog.git
 cd code/xxxx/
 ```
 
+#### | 性能优化
+
+* [React 同构应用 PWA 升级指南](https://github.com/happylindz/blog/issues/14)
+* [使用 Proload/Prefetch 优化你的应用](https://github.com/happylindz/blog/issues/17)
+
 #### | React 相关
 
 * [深入理解 React 状态管理](https://github.com/happylindz/react-state-management-tutorial)
 * [Redux 异步流最佳实践](https://github.com/happylindz/blog/issues/2)
 * [剖析单页面应用路由实现原理](https://github.com/happylindz/blog/issues/4)
-* [React 同构应用 PWA 升级指南](https://github.com/happylindz/blog/issues/14)
 
 #### | 前端工程化
 
