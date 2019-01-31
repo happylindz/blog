@@ -31,6 +31,7 @@ cd code/xxxx/
 * [webpack 持久化缓存实践](https://github.com/happylindz/blog/issues/7)
 * [webpack 大型应用优化实践](https://github.com/happylindz/blog/issues/8)
 * [深入浅出 sideEffects](https://github.com/happylindz/blog/issues/15)
+* [动态引入语言包 - 让你的 moment 库更小](https://github.com/happylindz/blog/issues/18)
 
 #### | ES6 
 
