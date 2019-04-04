@@ -38,7 +38,7 @@ class App extends React.Component {
 }
 ```
 
-一个简单的计数器组件就完成了，而在函数组件中，由于没有 this 这个黑魔法，React 通过 useState 来帮我们保存组件的状态。[在线 Demo](https://codesandbox.io/s/ojk1oloq9z)
+一个简单的计数器组件就完成了，而在函数组件中，由于没有 this 这个黑魔法，React 通过 useState 来帮我们保存组件的状态。[在线 Demo](https://codesandbox.io/s/mj3j955m6x)
 
 ```javascript
 import React, { useState } from "react";
@@ -335,7 +335,7 @@ useCallback(fn, inputs) is equivalent to useMemo(() => fn, inputs).
 
 ```javascript
 function App() {
-  const memoizedHandleClick = useCallback(() => () => {
+  const memoizedHandleClick = useMemo(() => () => {
     console.log('Click happened')
   }, []); // 空数组代表无论什么情况下该函数都不会发生改变
   return <SomeComponent onClick={memoizedHandleClick}>Click Me</SomeComponent>;
